@@ -2,21 +2,7 @@ import pandas as pd
 import numpy as np
 import json
 
-dtPath = "./../Dataset/cleanedData.csv"
-
-mainDt = pd.read_csv(dtPath)
-
-mainDt = mainDt[["facility","patient_ID","year","month","Nr_Small","Nr_Medium","Nr_Large"]]
-mainDt.fillna(0,inplace=True)
-dt = mainDt.iloc[:,1:7].astype(int).astype(str)
-mainDt["State"] = dt["Nr_Small"]+"_"+dt["Nr_Medium"]+"_"+dt["Nr_Large"]     # Add State column
-
-recordsWith6PolypsOrMore = list(state > 6 for state in [sum(map(float, s.split('_'))) for s in mainDt.State])
-mainDt.loc[recordsWith6PolypsOrMore,["State"]] = '666'
-
-mainDt.to_csv("./../Dataset/paitent_State.csv", sep=',', encoding='utf-8', index=False)
-
-#-----------------------------------------------------------------  Create states
+#-----------------------------------------------------------------  Create States
 
 stateList =[]
 for small in range(0,7):
@@ -32,18 +18,18 @@ stateList.append('666')
 
 print("All Possible States Are: ")
 print(stateList)
+
 #-----------------------------------------------------------   Create matrix for keeping transitions
 
-toStatep          = { state : 0  for state in stateList}
-transitionCounter = { state : toStatep  for state in stateList}
+toState          = { state : 0  for state in stateList}
+transitionCounter = { state : toState  for state in stateList}
 
 #---------------------------------------------------------------
+dtPath = "./../Dataset/paitent_State.csv"
+mainDt = pd.read_csv(dtPath)
 
 patients = mainDt["patient_ID"].unique()
 print("Number of paitents: " + str(len(patients)))
-
-dtPath = "./../Dataset/paitent_State.csv"
-mainDt = pd.read_csv(dtPath)
 
 def updateStateTransitions(dataset):
     rowsNr = np.shape(dataset)[0]
@@ -69,4 +55,3 @@ json = json.dumps(transitionCounter)
 f = open("./../Dataset/transitionCounter.json", "w")
 f.write(json)
 f.close()
-
