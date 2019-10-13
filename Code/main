@@ -29,3 +29,8 @@ for small in range(0,7):
 
 
 print(stateList)
+#-----------------------------------------------------------   Create matrix for keeping transitions
+toStatep          = { state : -1  for state in stateList}
+transitionCounter = { state : toStatep  for state in stateList}
+
+print(transitionCounter["0_0_3"]["0_1_1"])

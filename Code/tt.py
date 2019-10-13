@@ -10,3 +10,4 @@ options = np.random.choice([True,False],30)
 print(options)
 
 print(dt[options].State)
+
