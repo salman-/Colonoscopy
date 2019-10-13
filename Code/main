@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import json
 
 dtPath = "./../Dataset/cleanedData.csv"
 
@@ -27,9 +28,12 @@ for small in range(0,7):
                 state = str(small)+"_"+str(medium)+"_"+str(large)
                 stateList.append(state)
 
+stateList.append('666')
 
+print("All Possible States Are: ")
 print(stateList)
 #-----------------------------------------------------------   Create matrix for keeping transitions
+
 toStatep          = { state : 0  for state in stateList}
 transitionCounter = { state : toStatep  for state in stateList}
 
@@ -47,17 +51,22 @@ def updateStateTransitions(dataset):
         fromState = dt.iloc[i,7]
         toState   = dt.iloc[(i+1), 7]
         transitionCounter[fromState][toState] = transitionCounter[fromState][toState] + 1
-        print("Row is: "+str(i))
-
-
+        print("fromState is: "+str(fromState)+" toState is: "+str(toState))
 
 for patient in patients:
 
     dt = mainDt[ mainDt.patient_ID == patient]
     if np.shape(dt)[0] > 1 :
         print("Patient: "+str(patient))
+        print(dt)
         dt.sort_values(['year', 'month'], ascending=[True, True],inplace=True)
         updateStateTransitions(dt)
-        print(dt)
         print("------------------------------")
+
+#------------------------------------------------------- Save transitionCounter into a json file
+
+json = json.dumps(transitionCounter)
+f = open("./../Dataset/transitionCounter.json", "w")
+f.write(json)
+f.close()
 
