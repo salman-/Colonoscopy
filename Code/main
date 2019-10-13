@@ -11,11 +11,11 @@ dt = mainDt.iloc[:,1:7].astype(int).astype(str)
 mainDt["State"] = dt["Nr_Small"]+"_"+dt["Nr_Medium"]+"_"+dt["Nr_Large"]     # Add State column
 
 recordsWith6PolypsOrMore = list(state > 6 for state in [sum(map(float, s.split('_'))) for s in mainDt.State])
-
-
-mainDt.loc[recordsWith6PolypsOrMore,["State"]] = 666
+mainDt.loc[recordsWith6PolypsOrMore,["State"]] = '666'
 
 mainDt.to_csv("./../Dataset/paitent_State.csv", sep=',', encoding='utf-8', index=False)
+
+#-----------------------------------------------------------------  Create states
 
 stateList =[]
 for small in range(0,7):
@@ -30,7 +30,34 @@ for small in range(0,7):
 
 print(stateList)
 #-----------------------------------------------------------   Create matrix for keeping transitions
-toStatep          = { state : -1  for state in stateList}
+toStatep          = { state : 0  for state in stateList}
 transitionCounter = { state : toStatep  for state in stateList}
 
-print(transitionCounter["0_0_3"]["0_1_1"])
+#---------------------------------------------------------------
+
+patients = mainDt["patient_ID"].unique()
+print("Number of paitents: " + str(len(patients)))
+
+dtPath = "./../Dataset/paitent_State.csv"
+mainDt = pd.read_csv(dtPath)
+
+def updateStateTransitions(dataset):
+    rowsNr = np.shape(dataset)[0]
+    for i in list(range(0,rowsNr-1)):
+        fromState = dt.iloc[i,7]
+        toState   = dt.iloc[(i+1), 7]
+        transitionCounter[fromState][toState] = transitionCounter[fromState][toState] + 1
+        print("Row is: "+str(i))
+
+
+
+for patient in patients:
+
+    dt = mainDt[ mainDt.patient_ID == patient]
+    if np.shape(dt)[0] > 1 :
+        print("Patient: "+str(patient))
+        dt.sort_values(['year', 'month'], ascending=[True, True],inplace=True)
+        updateStateTransitions(dt)
+        print(dt)
+        print("------------------------------")
+
