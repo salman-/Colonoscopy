@@ -1,13 +1,10 @@
 import numpy as np
 import pandas as pd
 
+stateList = ['0_0_0', '0_0_1', '0_0_2', '0_0_3', '0_0_4']
+toState          = { state : 0  for state in stateList}
+transitionCounter = { state : toState.copy()  for state in stateList}
 
-dict = {"State":np.random.randint(low=1,high=20,size=30)}
-dt = pd.DataFrame(data=dict)
+transitionCounter['0_0_0']['0_0_2'] = transitionCounter['0_0_0']['0_0_2'] + 1
 
-options = np.random.choice([True,False],30)
-
-print(options)
-
-print(dt[options].State)
-
+print(transitionCounter)

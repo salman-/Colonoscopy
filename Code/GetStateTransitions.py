@@ -19,10 +19,11 @@ stateList.append('666')
 print("All Possible States Are: ")
 print(stateList)
 
+print("Number of states is: "+str(len(stateList)))
 #-----------------------------------------------------------   Create matrix for keeping transitions
 
 toState          = { state : 0  for state in stateList}
-transitionCounter = { state : toState  for state in stateList}
+transitionCounter = { state : toState.copy()  for state in stateList}
 
 #---------------------------------------------------------------
 dtPath = "./../Dataset/paitent_State.csv"
