@@ -32,6 +32,7 @@ mainDt = pd.read_csv(dtPath)
 patients = mainDt["patient_ID"].unique()
 print("Number of paitents: " + str(len(patients)))
 
+
 def updateStateTransitions(dataset):
     rowsNr = np.shape(dataset)[0]
     for i in list(range(0,rowsNr-1)):
