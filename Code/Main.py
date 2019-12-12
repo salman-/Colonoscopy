@@ -16,5 +16,7 @@ from ReduceStatesMethod2 import ReduceStatesMethod2
 dtPath = "./../Dataset/1.csv"
 dtPath = "./../Dataset/2.csv"
 
+
+
 ost = ObtainStateTransitions(7,dtPath)
 
