@@ -10,7 +10,10 @@ from ReduceStatesMethod2 import ReduceStatesMethod2
 #rsm2 = ReduceStatesMethod2()
 #rsm2.output()
 
-dtPath = "./../Dataset/paitent_State_Reduced_State_By_Method2.csv"
+#dtPath = "./../Dataset/paitent_State_Reduced_State_By_Method2.csv"
 
-ost = ObtainStateTransitions(4,dtPath)
+dtPath = "./../Dataset/1.csv"
+dtPath = "./../Dataset/2.csv"
+
+ost = ObtainStateTransitions(7,dtPath)
 
