@@ -12,6 +12,7 @@ from ReduceStatesMethod2 import ReduceStatesMethod2
 
 #dtPath = "./../Dataset/paitent_State_Reduced_State_By_Method2.csv"
 
+
 dtPath = "./../Dataset/1.csv"
 dtPath = "./../Dataset/2.csv"
 
