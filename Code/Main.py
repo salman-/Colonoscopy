@@ -5,6 +5,7 @@ from ReduceStatesMethod2 import ReduceStatesMethod2
 #rsm1 = ReduceStatesMethod1()
 #rsm1.reduce_state_method1()
 #rsm1.output()
+## the firt comment
 
 
 #rsm2 = ReduceStatesMethod2()
