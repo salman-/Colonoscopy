@@ -7,8 +7,8 @@ from dataSeperator    import DataSeperator
 from dataMerger       import DataMerger
 
 #originalDTPath = "./datasets/Original DT/complete-non-cleaned-DT.csv"
-originalDTPath = "./datasets/Original DT/sample.csv"
-#originalDTPath = "./datasets/Original DT/Indianapolis-original.csv"
+#originalDTPath = "./datasets/Original DT/sample.csv"
+originalDTPath = "./datasets/Original DT/Indianapolis-original.csv"
 cleanedDTPath  = "./datasets/Capsules/cleanedDataSet.csv"
 
 PolypExtractor(originalDTPath)        # Set dataset polyp based
