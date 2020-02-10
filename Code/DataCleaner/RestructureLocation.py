@@ -11,29 +11,21 @@ class RestructureLocation:
         self.removeAllLocationsButRightAndLeft()
         self.writeToFile(dataSetPath)
 
-    def writeToFile(self,dataSetPath):
-        self.cleanedDataSet.to_csv(dataSetPath, sep=',', encoding='utf-8', index=False)
-
     def setRight(self):
 
         dt = self.cleanedDataSet.iloc[:, np.r_[81, 47:60]]  # 70 = PolyID
-
         dt = dt.fillna(0)
         dt = dt.astype(float)
-
         self.cleanedDataSet["Right "] = dt["cecum"] + dt["ascending colon"] +\
                                         dt["ileocecal valve"] + dt["hepatic flexure"] + \
                                         dt["transverse colon"] + dt["splenic flexure"] +\
                                         dt["appendix"] + dt["Right "]
 
-
     def setLeft(self):
 
-        dt = self.cleanedDataSet.iloc[:, np.r_[81, 47:60]]  # 81 = PolyID
-
+        dt = self.cleanedDataSet.iloc[:, np.r_[81, 47:60]]  # 70 = PolyID
         dt = dt.fillna(0)
         dt = dt.astype(float)
-
         self.cleanedDataSet["Left"] = dt["descending colon"] + dt["sigmoid colon"] +\
                                       dt["rectum"] + dt["rectosigmoid"] + dt["Left"]
 
@@ -43,3 +35,6 @@ class RestructureLocation:
             ["cecum", "ascending colon", "ileocecal valve", "hepatic flexure",
              "transverse colon","splenic flexure", "appendix", "descending colon",
              "sigmoid colon", "rectum", "rectosigmoid"], axis=1,inplace=True)
+
+    def writeToFile(self,dataSetPath):
+        self.cleanedDataSet.to_csv(dataSetPath, sep=',', encoding='utf-8', index=False)

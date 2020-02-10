@@ -8,20 +8,13 @@ class QuantificationOfNumberOfSessiles:
 
         self.cleanedDataSet = pd.read_csv(dataSetPath, error_bad_lines=False, index_col=False, dtype='unicode')
         self.convertQualtivativeValuesToNumbers()   # Sometimes Number of sessels are expressed with words such as Few, or Multiple.
-                                                    # This func convert them to numbers
 
         self.distributeTheNumberOfSessileIntoLocations()
         self.writeToFile()
 
     def convertQualtivativeValuesToNumbers(self):   # "Number of sessiles" is some times explained in words which must be converted to numbers
 
-        self.cleanedDataSet["Number of sessiles"].replace("few",2,inplace=True)
-        self.cleanedDataSet["Number of sessiles"].replace("multiple", 3, inplace=True)
-        self.cleanedDataSet["Number of sessiles"].replace("Multiple", 3, inplace=True)
-
-        self.cleanedDataSet["Number of sessiles"].replace("probable",1,inplace=True)
-        self.cleanedDataSet["Number of sessiles"].replace("several", 3, inplace=True)
-        self.cleanedDataSet["Number of sessiles"].replace("many", 4, inplace=True)
+        self.cleanedDataSet["Number of sessiles"].replace("3+", 4, inplace=True)
         self.writeToFile()
 
     def distributeTheNumberOfSessileIntoLocations(self):

@@ -98,7 +98,3 @@ class PolypExtractor:
         self.cleanedDataSet.replace("  ", "", inplace=True)
         self.cleanedDataSet.replace("   ", "", inplace=True)
 
-    """def removeAllWhiteSpaces(self):
-        self.cleanedDataSet.fillna(0, inplace=True)
-        self.writeToFile()"""
-
