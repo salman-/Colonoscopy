@@ -29,6 +29,7 @@ class ObtainStateTransitions:
                         stateList.append(state)
 
         self.stateList.append('6_6_6')  # "6_6_6" is only used in the Method1
+        self.stateList.append('9_9_9')  # "9_9_9" is only used in the Method1
 
         print("All Possible States Are: ")
         print(self.stateList)
@@ -53,8 +54,8 @@ class ObtainStateTransitions:
     def updateStateTransitions(self, dataset):
         rowsNr = np.shape(dataset)[0]
         for i in list(range(0,rowsNr-1)):                      # Navigate throw DT
-            fromState = dataset.iloc[i,7]                      # Column 7 is the "State" column in "paitent_State.csv"
-            toState   = dataset.iloc[(i+1), 7]
+            fromState = dataset.iloc[i,8]                      # Column 8 is the "State" column in "paitent_State.csv"
+            toState   = dataset.iloc[(i+1), 8]
             self.transitionMatrix[fromState][toState] = self.transitionMatrix[fromState][toState] + 1
             print("fromState is: "+str(fromState)+" toState is: "+str(toState))
 
@@ -79,13 +80,13 @@ class ObtainStateTransitions:
             for toState in stateList:
                 dt.loc[dt["States"] == fromState,toState] = transitionCounter[fromState][toState]
 
-        dt.to_csv("./../Dataset/transitionCounter.csv", sep=',', encoding='utf-8', index=False)
+        dt.to_csv("./Dataset/transitionCounter.csv", sep=',', encoding='utf-8', index=False)
 
 #----------------------------------------------------- Save TransitionCounter into a .json file
 
     def writeToJSONFile(self,json,stateList,transitionCounter):
 
         json = json.dumps(transitionCounter)
-        f = open("./../Dataset/transitionCounter.json", "w")
+        f = open("./Dataset/transitionCounter.json", "w")
         f.write(json)
         f.close()

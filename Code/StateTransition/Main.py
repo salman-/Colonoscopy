@@ -21,5 +21,5 @@ rsm1.output(outputDTPath)
 
 
 
-#ost = ObtainStateTransitions(7,dtPath)
+ost = ObtainStateTransitions(7,outputDTPath)
 
