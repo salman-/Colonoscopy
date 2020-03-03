@@ -23,11 +23,11 @@ class DataMerger:         # After spliting the main dataset to small capsules th
 
     def getPolypsBasedOnSize(self, size):
 
-        polyp        = pd.read_csv("./datasets/Capsules/polyp.csv")
-        patientPolyp = pd.read_csv("./datasets/Capsules/patientPolyp.csv")
-        patient      = pd.read_csv("./datasets/Capsules/patient.csv")
-        location     = pd.read_csv("./datasets/Capsules/location.csv")
-        cancerStatus = pd.read_csv("./datasets/Capsules/cancerStatus.csv")
+        polyp        = pd.read_csv("./../datasets/Capsules/polyp.csv")
+        patientPolyp = pd.read_csv("./../datasets/Capsules/patientPolyp.csv")
+        patient      = pd.read_csv("./../datasets/Capsules/patient.csv")
+        location     = pd.read_csv("./../datasets/Capsules/location.csv")
+        cancerStatus = pd.read_csv("./../datasets/Capsules/cancerStatus.csv")
 
         polypQuery = """ 
                        select patient.ID, 
@@ -42,28 +42,28 @@ class DataMerger:         # After spliting the main dataset to small capsules th
 
         polyps = ps.sqldf(polypQuery)
 
-        pathToSaveCSV = "./datasets/Polyps/{0}.csv".format(size)
+        pathToSaveCSV = "./../datasets/Polyps/{0}.csv".format(size)
         polyps.to_csv(pathToSaveCSV, sep=',', encoding='utf-8', index=False)
 
     def mergAllPolypsOfPaitents(self):      # Each user might have different size of polyps. Aggregate these polyps in 1 row
 
-        samallPolyps = pd.read_csv("./datasets/Polyps/Small.csv")
+        samallPolyps = pd.read_csv("./../datasets/Polyps/Small.csv")
 
-        mediumPolyps = pd.read_csv("./datasets/Polyps/Medium.csv")
+        mediumPolyps = pd.read_csv("./../datasets/Polyps/Medium.csv")
 
-        largPolyps   = pd.read_csv("./datasets/Polyps/Large.csv")
+        largPolyps   = pd.read_csv("./../datasets/Polyps/Large.csv")
 
-        patient      = pd.read_csv("./datasets/Capsules/patient.csv")
+        patient      = pd.read_csv("./../datasets/Capsules/patient.csv")
 
         MergedDT = samallPolyps.merge(mediumPolyps, how="outer",on="ID").merge(largPolyps, how="outer",on="ID")
         MergedDT = patient.merge(MergedDT, how="inner",on="ID")
         MergedDT = MergedDT.drop(["ID"], axis=1)
 
-        MergedDT.to_csv("./datasets/Final DT/MergedDT.csv", sep=',', encoding='utf-8', index=False)
+        MergedDT.to_csv("./../datasets/Final DT/MergedDT.csv", sep=',', encoding='utf-8', index=False)
 
     def mergeRowsForEachPaitent(self,size):  # By applying a Group by and then a SUM it categorize the polyps of a patient on 1 row
 
-        pathToSaveCSV = "./datasets/Polyps/{0}.csv".format(size)
+        pathToSaveCSV = "./../datasets/Polyps/{0}.csv".format(size)
         dt = pd.read_csv(pathToSaveCSV).astype(float)
 
         columns = list(dt.columns[1:])
@@ -77,7 +77,7 @@ class DataMerger:         # After spliting the main dataset to small capsules th
 
     def omitUnusedColumns(self,size):
 
-        pathToSaveCSV = "./datasets/Polyps/{0}.csv".format(size)
+        pathToSaveCSV = "./../datasets/Polyps/{0}.csv".format(size)
         dt = pd.read_csv(pathToSaveCSV)
         dt = dt.fillna(0)
 

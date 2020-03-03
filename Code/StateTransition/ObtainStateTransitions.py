@@ -80,13 +80,13 @@ class ObtainStateTransitions:
             for toState in stateList:
                 dt.loc[dt["States"] == fromState,toState] = transitionCounter[fromState][toState]
 
-        dt.to_csv("./Dataset/transitionCounter.csv", sep=',', encoding='utf-8', index=False)
+        dt.to_csv("./../datasets/Final-State-Transitions-Matrix/transitionCounter.csv", sep=',', encoding='utf-8', index=False)
 
 #----------------------------------------------------- Save TransitionCounter into a .json file
 
     def writeToJSONFile(self,json,stateList,transitionCounter):
 
         json = json.dumps(transitionCounter)
-        f = open("./Dataset/transitionCounter.json", "w")
+        f = open("./../datasets/Final-State-Transitions-Matrix/transitionCounter.json", "w")
         f.write(json)
         f.close()

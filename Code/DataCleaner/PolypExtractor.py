@@ -91,7 +91,7 @@ class PolypExtractor:
         self.cleanedDataSet["PolypID"] = range(1,len(self.cleanedDataSet)+1)
 
     def writeToFile(self):
-        self.cleanedDataSet.to_csv("./datasets/Capsules/cleanedDataSet.csv", sep=',', encoding='utf-8', index=False)
+        self.cleanedDataSet.to_csv("./../datasets/Capsules/cleanedDataSet.csv", sep=',', encoding='utf-8', index=False)
 
     def removeWhiteSpaces(self):
         self.cleanedDataSet.replace(" ", "", inplace=True)

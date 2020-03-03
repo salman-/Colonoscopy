@@ -4,13 +4,11 @@ from RestructureLocation import RestructureLocation
 from QuantificationOfNumberOfSessiles import QuantificationOfNumberOfSessiles
 from dataSeperator    import DataSeperator
 from dataMerger       import DataMerger
+from ReduceStatesMethod1 import ReduceStatesMethod1
 
-#originalDTPath = "./datasets/Original DT/complete-non-cleaned-DT.csv"
-#originalDTPath = "./datasets/Original DT/Final_AnnArbor.csv"
-#originalDTPath = "./datasets/Original DT/Indianapolis_original.csv"
 
-originalDTPath = "./datasets/Original DT/sample.csv"
-cleanedDTPath  = "./datasets/Capsules/cleanedDataSet.csv"
+originalDTPath = "./../datasets/Original DT/sample.csv"
+cleanedDTPath  = "./../datasets/Capsules/cleanedDataSet.csv"
 
 PolypExtractor(originalDTPath)        # Set dataset polyp based
 PolypSizeCleaner(cleanedDTPath)       # Validate the Size of column before obtain the final status
@@ -21,3 +19,29 @@ QuantificationOfNumberOfSessiles(cleanedDTPath)
 DataSeperator(cleanedDTPath)         # Seprate different capsules and save them in .csv files
 
 DataMerger()                         # Merge the seperated capsules in order to obtain the patient status
+
+
+inputDTPath  = "./../datasets/Final DT/MergedDT.csv"
+outputDTPath = "./../datasets/Final_CleanedDT.csv"
+
+rsm1 = ReduceStatesMethod1(inputDTPath)
+rsm1.reduce_state_method1()
+rsm1.output(outputDTPath)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

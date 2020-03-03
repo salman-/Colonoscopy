@@ -30,6 +30,6 @@ class QuantificationOfNumberOfSessiles:
         self.cleanedDataSet["Left"] = self.cleanedDataSet["Number of sessiles"] - self.cleanedDataSet["Right "]
 
     def writeToFile(self):
-        self.cleanedDataSet.to_csv("./datasets/Capsules/cleanedDataSet.csv", sep=',', encoding='utf-8', index=False)
+        self.cleanedDataSet.to_csv("./../datasets/Capsules/cleanedDataSet.csv", sep=',', encoding='utf-8', index=False)
 
 
