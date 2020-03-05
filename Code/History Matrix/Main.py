@@ -8,11 +8,12 @@ dt = pd.read_csv(dtPath)
 minYear = np.min(dt.year)
 maxYear = np.max(dt.year)
 
-historyMatrix = pd.DataFrame({
-    "patient_ID":dt.patient_ID.unique()
-})
+historyMatrix = pd.DataFrame()
 
-for year in range(minYear,maxYear+1):
-    historyMatrix[str(year)] = -1
+for ind in dt.index:
+     paitent_ID = dt['patient_ID'][ind]
+     year = dt['year'][ind]
+     state = dt['State'][ind]
+     historyMatrix.loc[paitent_ID,year] = state
 
-print(historyMatrix)
+historyMatrix.to_csv("./../datasets/historyMatrix.csv", sep=',', encoding='utf-8')
