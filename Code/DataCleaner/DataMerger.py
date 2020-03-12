@@ -47,7 +47,9 @@ class DataMerger:         # After spliting the main dataset to small capsules th
 
     def mergAllPolypsOfPaitents(self):      # Each user might have different size of polyps. Aggregate these polyps in 1 row
 
-        samallPolyps = pd.read_csv("./../datasets/Polyps/Small.csv")
+        smallPolyps = pd.read_csv("./../datasets/Polyps/Small.csv")
+
+        smallPolyps = self.considerPolypsWithPathology(smallPolyps)
 
         mediumPolyps = pd.read_csv("./../datasets/Polyps/Medium.csv")
 
@@ -55,11 +57,19 @@ class DataMerger:         # After spliting the main dataset to small capsules th
 
         patient      = pd.read_csv("./../datasets/Capsules/patient.csv")
 
-        MergedDT = samallPolyps.merge(mediumPolyps, how="outer",on="ID").merge(largPolyps, how="outer",on="ID")
+        MergedDT = smallPolyps.merge(mediumPolyps, how="outer",on="ID").merge(largPolyps, how="outer",on="ID")
         MergedDT = patient.merge(MergedDT, how="inner",on="ID")
         MergedDT = MergedDT.drop(["ID"], axis=1)
 
         MergedDT.to_csv("./../datasets/Final DT/MergedDT.csv", sep=',', encoding='utf-8', index=False)
+
+    def considerPolypsWithPathology(self,polyDT):
+        sumOfPathologies = polyDT.loc[:, "Adenocarcinoma"] + polyDT.loc[:, "Villous"] + polyDT.loc[:,"adenoma"] +\
+              polyDT.loc[:,"high grade dysplasia"] + polyDT.loc[:,"Adenomatous-capital"] + polyDT.loc[:,"Tubular"]
+
+        polyDT.loc[sumOfPathologies == 0, "Nr_Small"] = 0
+        #polyDT.insert(2, "sum of cancers", sumOfPathologies)
+        return polyDT
 
     def mergeRowsForEachPaitent(self,size):  # By applying a Group by and then a SUM it categorize the polyps of a patient on 1 row
 

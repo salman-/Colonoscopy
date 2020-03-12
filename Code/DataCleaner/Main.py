@@ -2,8 +2,8 @@ from PolypExtractor   import PolypExtractor
 from PolypSizeCleaner import PolypSizeCleaner
 from RestructureLocation import RestructureLocation
 from QuantificationOfNumberOfSessiles import QuantificationOfNumberOfSessiles
-from dataSeperator    import DataSeperator
-from dataMerger       import DataMerger
+from DataSeperator    import DataSeperator
+from DataMerger       import DataMerger
 from ReduceStatesMethod1 import ReduceStatesMethod1
 
 
