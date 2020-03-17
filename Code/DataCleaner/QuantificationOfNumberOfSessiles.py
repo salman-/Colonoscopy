@@ -24,8 +24,8 @@ class QuantificationOfNumberOfSessiles:
         self.cleanedDataSet['Left'] = self.cleanedDataSet['Left'].astype(float)
         self.cleanedDataSet['Number of sessiles'] = self.cleanedDataSet['Number of sessiles'].astype(float)
 
-        self.cleanedDataSet["Right "] = np.random.binomial(self.cleanedDataSet["Number of sessiles"],
-                                                           self.cleanedDataSet["Right "] / (self.cleanedDataSet["Right "] + self.cleanedDataSet["Left"]))
+        rightLocationProbability = (self.cleanedDataSet["Right "] / (self.cleanedDataSet["Right "] + self.cleanedDataSet["Left"])).fillna(0)
+        self.cleanedDataSet["Right "] = np.random.binomial(self.cleanedDataSet["Number of sessiles"], rightLocationProbability )
 
         self.cleanedDataSet["Left"] = self.cleanedDataSet["Number of sessiles"] - self.cleanedDataSet["Right "]
 

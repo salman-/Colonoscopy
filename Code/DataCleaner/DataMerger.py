@@ -47,19 +47,31 @@ class DataMerger:         # After spliting the main dataset to small capsules th
 
     def mergAllPolypsOfPaitents(self):      # Each user might have different size of polyps. Aggregate these polyps in 1 row
 
-        samallPolyps = pd.read_csv("./../datasets/Polyps/Small.csv")
+        smallPolyps = pd.read_csv("./../datasets/Polyps/Small.csv")
 
         mediumPolyps = pd.read_csv("./../datasets/Polyps/Medium.csv")
 
         largPolyps   = pd.read_csv("./../datasets/Polyps/Large.csv")
 
+
         patient      = pd.read_csv("./../datasets/Capsules/patient.csv")
 
-        MergedDT = samallPolyps.merge(mediumPolyps, how="outer",on="ID").merge(largPolyps, how="outer",on="ID")
+        MergedDT = smallPolyps.merge(mediumPolyps, how="outer",on="ID").merge(largPolyps, how="outer",on="ID")
         MergedDT = patient.merge(MergedDT, how="inner",on="ID")
         MergedDT = MergedDT.drop(["ID"], axis=1)
 
         MergedDT.to_csv("./../datasets/Final DT/MergedDT.csv", sep=',', encoding='utf-8', index=False)
+
+    def considerPolypsWithPathology(self,polyDT):                     # if a polyp has no pathology then, the number its sesels must be 0 as well
+                                                                      # Biopsy is not counted
+        sumOfPathologies = polyDT.loc[:, "Adenocarcinoma"] + polyDT.loc[:, "Villous"] + polyDT.loc[:,"adenoma"] +\
+              polyDT.loc[:,"high grade dysplasia"] + polyDT.loc[:,"Adenomatous-capital"] + polyDT.loc[:,"Tubular"]
+
+       # polyDT.iloc[sumOfPathologies == 0, 1] = 0
+        selectedRows = np.arange(len(polyDT))[ sumOfPathologies == 0]
+        polyDT.iloc[selectedRows, 1] = 0
+
+        return polyDT
 
     def mergeRowsForEachPaitent(self,size):  # By applying a Group by and then a SUM it categorize the polyps of a patient on 1 row
 
@@ -70,6 +82,7 @@ class DataMerger:         # After spliting the main dataset to small capsules th
 
         print("Size is:   "+size)
         dt = dt.groupby(by=['ID'], as_index=False)[columns].sum()
+        dt = self.considerPolypsWithPathology(dt)
         print("======================================================")
         print(dt)
 
