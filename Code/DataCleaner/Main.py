@@ -11,6 +11,7 @@ originalDTPath = "./../datasets/Original DT/sample.csv"
 cleanedDTPath  = "./../datasets/Capsules/cleanedDataSet.csv"
 
 PolypExtractor(originalDTPath)        # Set dataset polyp based
+
 PolypSizeCleaner(cleanedDTPath)       # Validate the Size of column before obtain the final status
 RestructureLocation(cleanedDTPath)    # Colon has 13 different location. Here we categorize them into Right and Left
 
