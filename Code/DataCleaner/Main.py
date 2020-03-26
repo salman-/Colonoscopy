@@ -28,8 +28,8 @@ outputDTPath = "./../datasets/Final_CleanedDT.csv"
 rsm1 = ReduceStatesMethod1(inputDTPath)
 rsm1.reduce_state_method1()
 rsm1.output(outputDTPath)
-
-
+"""
+"""
 
 
 

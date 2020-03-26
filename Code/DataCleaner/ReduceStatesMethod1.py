@@ -15,12 +15,12 @@ class ReduceStatesMethod1:
 
         self.dtPath = inputDTPath
         self.mainDt = pd.read_csv(self.dtPath)
-        self.mainDt = self.mainDt[["facility","patient_ID","year","month",
+        self.mainDt = self.mainDt[["facility","patient_ID","year","month","dt",
                                    "Nr_Small","Adenocarcinoma_x",
                                    "Nr_Medium","Adenocarcinoma_y",
                                    "Nr_Large","Adenocarcinoma"]]
         self.mainDt.fillna(0,inplace=True)
-        dt = self.mainDt.iloc[:,1:10].astype(int).astype(str)
+        dt = self.mainDt.iloc[:,1:11].astype(int).astype(str)
         self.mainDt["State"] = dt["Nr_Small"]+"_"+dt["Nr_Medium"]+"_"+dt["Nr_Large"]     # Add State column
         self.mainDt["Adenocarcinoma"] = dt["Adenocarcinoma"].astype(float)+dt["Adenocarcinoma_x"].astype(float)+dt["Adenocarcinoma_y"].astype(float)
         self.mainDt.drop(['Adenocarcinoma_x', 'Adenocarcinoma_y'], axis=1, inplace=True)
