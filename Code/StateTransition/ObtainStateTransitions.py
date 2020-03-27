@@ -54,10 +54,11 @@ class ObtainStateTransitions:
     def updateStateTransitions(self, dataset):
         rowsNr = np.shape(dataset)[0]
         for i in list(range(0,rowsNr-1)):                      # Navigate throw DT
-            fromState = dataset.iloc[i,8]                      # Column 8 is the "State" column in "paitent_State.csv"
-            toState   = dataset.iloc[(i+1), 8]
+            fromState = dataset.iloc[i,9]                      # Column 8 is the "State" column in "paitent_State.csv"
+            toState   = dataset.iloc[(i+1), 9]
             self.transitionMatrix[fromState][toState] = self.transitionMatrix[fromState][toState] + 1
-            print("fromState is: "+str(fromState)+" toState is: "+str(toState))
+            print("fromState is: " + str(fromState) + " toState is: " + str(toState))
+
 
     def obtainStateTransitionForEachPatient(self,dt,patients):
 
