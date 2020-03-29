@@ -86,4 +86,4 @@ class EmissionMatrix:
 
     def writeToCSVFile(self,mat):
         mat = pd.DataFrame(mat)
-        mat.to_csv("./../datasets/Matrix/matrix.csv", sep=',', encoding='utf-8', index=True)
+        mat.to_csv("./../datasets/EmissionMatrix/EmissionMatrix.csv", sep=',', encoding='utf-8', index=True)
