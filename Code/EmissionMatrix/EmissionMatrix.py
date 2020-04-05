@@ -2,6 +2,7 @@ import pandas as pd
 import scipy.stats
 import math
 
+
 class EmissionMatrix:
 
     def __init__(self,numberOfStates):
