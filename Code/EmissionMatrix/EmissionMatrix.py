@@ -2,7 +2,7 @@ import pandas as pd
 import scipy.stats
 import math
 
-
+## Emision matirix works based on Binomial Disribution
 class EmissionMatrix:
 
     def __init__(self,numberOfStates):
