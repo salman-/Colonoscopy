@@ -17,6 +17,7 @@ RestructureLocation(cleanedDTPath)    # Colon has 13 different location. Here we
 
 QuantificationOfNumberOfSessiles(cleanedDTPath)
 
+
 DataSeperator(cleanedDTPath)         # Seprate different capsules and save them in .csv files
 
 DataMerger()                         # Merge the seperated capsules in order to obtain the patient status
@@ -28,8 +29,8 @@ outputDTPath = "./../datasets/Final_CleanedDT.csv"
 rsm1 = ReduceStatesMethod1(inputDTPath)
 rsm1.reduce_state_method1()
 rsm1.output(outputDTPath)
-"""
-"""
+
+
 
 
 
