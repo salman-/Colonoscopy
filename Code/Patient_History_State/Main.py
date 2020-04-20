@@ -19,10 +19,11 @@ for ind in dt.index:
      historyMatrix.loc[paitent_ID, "0Facility"] = facility
 
 historyMatrix.columns = historyMatrix.columns.astype(str)
-
 historyMatrix = historyMatrix.reindex(sorted( historyMatrix.columns  ), axis=1)
 print(historyMatrix.columns)
-
+"""
+  Shift all the states to the very first column. So, the first column always have an state
+"""
 for rowNumber in range(len(historyMatrix)):
 
     firstNonNaColName = historyMatrix.iloc[rowNumber, 1:].first_valid_index()   # finds the name of the first column with non NA value (exclude the patient_ID)
@@ -37,4 +38,25 @@ for rowNumber in range(len(historyMatrix)):
 
 print(historyMatrix)
 
+"""
+Rename the columns
+"""
+lst = ["patient_ID", "facility"]
+
+for i in range(0 , len(historyMatrix.columns)-2):
+    lst.append("Time{num}".format(num=i))
+
+historyMatrix.columns = lst
+
+
+"""
+Remove the paitents which has only 1 colonoscopy result
+"""
+
+dt = historyMatrix.iloc[:,3:].notna()
+indices = np.where(dt.apply(np.sum, axis=1).tolist())[0].tolist()
+historyMatrixOfPaitentsWithMoreThan1Colnoscopy = historyMatrix.iloc[indices,:]
+
+
 historyMatrix.to_csv("./../datasets/historyMatrix.csv", sep=',', encoding='utf-8')
+historyMatrixOfPaitentsWithMoreThan1Colnoscopy.to_csv("./../datasets/historyMatrixOfPaitentsWithMoreThan1Colnoscopy.csv", sep=',', encoding='utf-8')

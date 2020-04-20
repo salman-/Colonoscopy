@@ -28,7 +28,7 @@ inputDTPath  = "./../datasets/Final DT/MergedDT.csv"
 outputDTPath = "./../datasets/Final_CleanedDT.csv"
 
 rsm1 = ReduceStatesMethod1(inputDTPath)
-rsm1.labelThePaitentsWithMoreThan6PolypsAs6_6_6()
+#rsm1.labelThePaitentsWithMoreThan6PolypsAs6_6_6()
 rsm1.labelThePaitentsWithCancersAs9_9_9()
 rsm1.output(outputDTPath)
 
