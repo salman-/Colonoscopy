@@ -5,6 +5,7 @@ from QuantificationOfNumberOfSessiles import QuantificationOfNumberOfSessiles
 from DataSeperator    import DataSeperator
 from DataMerger       import DataMerger
 from ReduceStatesMethod1 import ReduceStatesMethod1
+from Stat import Stat
 
 
 originalDTPath = "./../datasets/Original DT/sample.csv"
@@ -31,6 +32,11 @@ rsm1.labelThePaitentsWithMoreThan6PolypsAs6_6_6()
 rsm1.labelThePaitentsWithCancersAs9_9_9()
 rsm1.output(outputDTPath)
 
+inputDTPath  = "./../datasets/Final_CleanedDT.csv"
+outputDTPath = "./../datasets/StatDT.csv"
+
+
+stat = Stat(inputDTPath,outputDTPath)
 
 
 
