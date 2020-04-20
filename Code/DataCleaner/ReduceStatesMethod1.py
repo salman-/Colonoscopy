@@ -5,7 +5,6 @@ import pandas as np
 Method1 reduces the the number of states performs as below:
 1. Obtain sum of all polyps (let's call it "sum of polyps") in different sizes (Small,Medium,Large)
 2. If the "Sum of Polyps" is more than 6 then consider the state as 666
-
 """
 
 
@@ -25,9 +24,11 @@ class ReduceStatesMethod1:
         self.mainDt["Adenocarcinoma"] = dt["Adenocarcinoma"].astype(float)+dt["Adenocarcinoma_x"].astype(float)+dt["Adenocarcinoma_y"].astype(float)
         self.mainDt.drop(['Adenocarcinoma_x', 'Adenocarcinoma_y'], axis=1, inplace=True)
 
-    def reduce_state_method1(self):
+    def labelThePaitentsWithMoreThan6PolypsAs6_6_6(self):
         recordsWith6PolypsOrMore = list(state > 6 for state in [sum(map(float, s.split('_'))) for s in self.mainDt.State])
         self.mainDt.loc[recordsWith6PolypsOrMore,["State"]] = '6_6_6'
+
+    def labelThePaitentsWithCancersAs9_9_9(self):
         self.mainDt.loc[self.mainDt["Adenocarcinoma"]>0,["State"]] = '9_9_9'
 
 
