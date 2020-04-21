@@ -35,9 +35,6 @@ for rowNumber in range(len(historyMatrix)):
         if colNumber > 1:
              historyMatrix.iloc[rowNumber, colNumber] = math.nan
 
-
-
-
 """
 Rename the columns
 """
