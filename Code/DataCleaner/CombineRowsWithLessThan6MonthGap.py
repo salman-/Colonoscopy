@@ -26,7 +26,8 @@ class CombineRowsWithLessThan6MonthGap:
                         aggregatedRow = self.sumPolyps(selectedRows)
                         self.mainDT = self.mainDT[~self.mainDT.id.isin(selectedRows.id.tolist())]
                         self.mainDT = self.mainDT.append(aggregatedRow, ignore_index=True)
-                        rowIndex = 0                                           #  َAfter removing 2 rows and adding new one, start again
+                        rowIndex = 0                                            #  َAfter removing 2 rows and adding new one, start again
+
                     patientDT = self.mainDT[self.mainDT.patient_ID == patient]  # Again get all colonscopy of a given patient
 
                 print("------------------------------")
@@ -41,12 +42,10 @@ class CombineRowsWithLessThan6MonthGap:
         dt = dt.reset_index(drop=True)
         res = False
         if len(dt) > 1:
-            firstVisitDate = dt.loc[0, "year"] * 12 + dt.loc[0, "month"]
-            secondVisitDate = dt.loc[1,"year"] * 12 + dt.loc[1,"month"]
+            firstVisitDate =  dt.loc[0, "year"] * 12 + dt.loc[0, "month"]
+            secondVisitDate = dt.loc[1,"year"]  * 12 + dt.loc[1,"month"]
             timeDifference = secondVisitDate - firstVisitDate
-            print("firstVisitDate: " + str(firstVisitDate) + " secondVisitDate: " + str(
-                secondVisitDate) + " Is Time Gap > 6: " + str(res))
-            res = timeDifference < 180
+            res = timeDifference <= 6
 
         return res
 
@@ -59,7 +58,6 @@ class CombineRowsWithLessThan6MonthGap:
         return dt.loc[0,:]
 
     def saveOutPut(self):
-        #self.mainDT = self.mainDT.groupby(by=['patient_ID'], as_index=False).apply(lambda x: x.reset_index(drop = True))
-        #print(type(self.mainDT))
-        #self.mainDT.sort_values(['year', 'month'], ascending=[True, True], inplace=True)
+        self.mainDT = self.mainDT.groupby(by=['patient_ID'], as_index=False).apply(lambda x: x.reset_index(drop = True))
+        self.mainDT.sort_values(['patient_ID','year', 'month'], ascending=[True,True, True], inplace=True)
         self.mainDT.to_csv("./../datasets/Final_CleanedDT2.csv", sep=',', encoding='utf-8', index=False)

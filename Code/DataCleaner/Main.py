@@ -33,7 +33,7 @@ rsm1.output(outputDTPath)
 """
 #----------------------------------------
 
-inputDTPath  = "./../datasets/Final_CleanedDT.csv"
+inputDTPath  = "./../datasets/Final_CleanedDT1.csv"
 arwlt6mg = CombineRowsWithLessThan6MonthGap(inputDTPath)
 
 #----------------------------------------
