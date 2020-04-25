@@ -4,40 +4,50 @@ pd.set_option('display.max_columns', None)
 pd.set_option('display.width', 200)
 
 
-class CombineRowsWithLessThan6MonthGap():
+class CombineRowsWithLessThan6MonthGap:
 
     def __init__(self,dtPath):
 
-        self.dt = pd.read_csv(dtPath)
-        self.dt["id"] = [x for x in range(1, len(self.dt)+1)]
-        patients = self.dt.loc[:,"patient_ID"]
+        self.mainDT = pd.read_csv(dtPath)
+        self.mainDT["id"] = [x for x in range(1, len(self.mainDT) + 1)]
+        patients = self.mainDT.loc[:, "patient_ID"].unique()
 
         for patient in patients:
-            patientDT = self.dt[self.dt.patient_ID == patient]
-            if np.shape(patientDT)[0] > 1:
+            patientDT = self.mainDT[self.mainDT.patient_ID == patient]    # Group by patient_ID
 
-                patientDT.sort_values(['year', 'month'], ascending=[True, True], inplace=True)
-                print(patientDT)
-                first2Rows = self.getTheFirst2rows(patientDT)
-                res = self.isTheTimeDifferenceMoreThan6Month(first2Rows)
-                if res:
-                    aggregatedRow = self.sumPolyps(first2Rows)
-                    self.dt = self.dt[~self.dt.id.isin(first2Rows.id.tolist())]
-                    self.dt = self.dt.append(aggregatedRow, ignore_index=True)
+            if np.shape(patientDT)[0] > 1:                        # Only consider patient with more than 1 colonoscopy
+                for rowIndex in range(len(patientDT)):            #  ّFor each colonoscopy of a given patient
+
+                    patientDT.sort_values(['year', 'month'], ascending=[True, True], inplace=True)
+                    selectedRows = self.get2rows(patientDT,rowIndex)
+                    res = self.isTheTimeDifferenceMoreThan6Month(selectedRows)
+
+                    if res:
+                        aggregatedRow = self.sumPolyps(selectedRows)
+                        self.mainDT = self.mainDT[~self.mainDT.id.isin(selectedRows.id.tolist())]
+                        self.mainDT = self.mainDT.append(aggregatedRow, ignore_index=True)
+                        rowIndex = 0                                           #  َAfter removing 2 rows and adding new one, start again
+                    patientDT = self.mainDT[self.mainDT.patient_ID == patient]  # Again get all colonscopy of a given patient
+
                 print("------------------------------")
+
         self.saveOutPut()
 
 
-    def getTheFirst2rows(self,patientDT):
-        return patientDT.iloc[:2, :]
+    def get2rows(self, patientDT,index):
+        return patientDT.iloc[index:(index+2), :]
 
     def isTheTimeDifferenceMoreThan6Month(self,dt):
         dt = dt.reset_index(drop=True)
-        firstVisitDate = dt.loc[0,"year"]*12 + dt.loc[0,"month"]
-        secondVisitDate = dt.loc[1,"year"]*12 + dt.loc[1,"month"]
-        timeDifference = secondVisitDate - firstVisitDate
-        res = timeDifference < 180
-        print("firstVisitDate: "+ str(firstVisitDate) +" secondVisitDate: "+ str(secondVisitDate) +" Is Time Gap > 6: "+ str(res))
+        res = False
+        if len(dt) > 1:
+            firstVisitDate = dt.loc[0, "year"] * 12 + dt.loc[0, "month"]
+            secondVisitDate = dt.loc[1,"year"] * 12 + dt.loc[1,"month"]
+            timeDifference = secondVisitDate - firstVisitDate
+            print("firstVisitDate: " + str(firstVisitDate) + " secondVisitDate: " + str(
+                secondVisitDate) + " Is Time Gap > 6: " + str(res))
+            res = timeDifference < 180
+
         return res
 
     def sumPolyps(self,dt):
@@ -49,4 +59,7 @@ class CombineRowsWithLessThan6MonthGap():
         return dt.loc[0,:]
 
     def saveOutPut(self):
-        self.dt.to_csv("./../datasets/Final_CleanedDT2.csv", sep=',', encoding='utf-8', index=False)
+        #self.mainDT = self.mainDT.groupby(by=['patient_ID'], as_index=False).apply(lambda x: x.reset_index(drop = True))
+        #print(type(self.mainDT))
+        #self.mainDT.sort_values(['year', 'month'], ascending=[True, True], inplace=True)
+        self.mainDT.to_csv("./../datasets/Final_CleanedDT2.csv", sep=',', encoding='utf-8', index=False)
