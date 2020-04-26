@@ -34,6 +34,7 @@ class CombineRowsWithLessThan6MonthGap:
 
                 print("------------------------------")
 
+        self.mainDt.loc[self.mainDt["Adenocarcinoma"]>0,["State"]] = '9_9_9'
         self.saveOutPut()
 
 
