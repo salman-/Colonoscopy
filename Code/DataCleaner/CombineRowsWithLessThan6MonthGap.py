@@ -59,4 +59,5 @@ class CombineRowsWithLessThan6MonthGap:
     def saveOutPut(self):
         self.mainDT = self.mainDT.groupby(by=['patient_ID'], as_index=False).apply(lambda x: x.reset_index(drop = True))
         self.mainDT.sort_values(['patient_ID','year', 'month'], ascending=[True,True, True], inplace=True)
+        self.mainDT = self.mainDT.drop(['id'], axis=1)
         self.mainDT.to_csv("./../datasets/Final_CleanedDT1.csv", sep=',', encoding='utf-8', index=False)

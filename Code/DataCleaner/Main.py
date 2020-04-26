@@ -38,7 +38,7 @@ arwlt6mg = CombineRowsWithLessThan6MonthGap(inputDTPath)
 
 #----------------------------------------
 """
-inputDTPath  = "./../datasets/Final_CleanedDT.csv"
+inputDTPath  = "./../datasets/Final_CleanedDT1.csv"
 outputDTPath = "./../datasets/StatDT.csv"
 stat = Stat(inputDTPath,outputDTPath)
 
