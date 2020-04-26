@@ -15,17 +15,19 @@ class CombineRowsWithLessThan6MonthGap:
         for patient in patients:
             patientDT = self.mainDT[self.mainDT.patient_ID == patient]    # Group by patient_ID
 
-            if np.shape(patientDT)[0] > 1:                        # Only consider patient with more than 1 colonoscopy
-                for rowIndex in range(len(patientDT)):            #  ّFor each colonoscopy of a given patient
+            if np.shape(patientDT)[0] > 1:                  # Only consider patient with more than 1 colonoscopy
+                rowIndex = 0
+                while rowIndex < (len(patientDT)-1):            #  ّFor each colonoscopy of a given patient
 
                     patientDT.sort_values(['year', 'month'], ascending=[True, True], inplace=True)
                     selectedRows = self.get2rows(patientDT,rowIndex)
-                    res = self.isTheTimeDifferenceMoreThan6Month(selectedRows)
+                    rowIndex = rowIndex + 1
 
+                    res = self.isTheTimeDifferenceMoreThan6Month(selectedRows)
                     if res:
                         aggregatedRow = self.sumPolyps(selectedRows)
                         self.mainDT = self.mainDT[~self.mainDT.id.isin(selectedRows.id.tolist())]
-                        self.mainDT = self.mainDT.append(aggregatedRow, ignore_index=True)
+                        self.mainDT = self.mainDT.append(aggregatedRow, ignore_index=True).reindex()
                         rowIndex = 0                                            #  َAfter removing 2 rows and adding new one, start again
 
                     patientDT = self.mainDT[self.mainDT.patient_ID == patient]  # Again get all colonscopy of a given patient
@@ -40,13 +42,10 @@ class CombineRowsWithLessThan6MonthGap:
 
     def isTheTimeDifferenceMoreThan6Month(self,dt):
         dt = dt.reset_index(drop=True)
-        res = False
-        if len(dt) > 1:
-            firstVisitDate =  dt.loc[0, "year"] * 12 + dt.loc[0, "month"]
-            secondVisitDate = dt.loc[1,"year"]  * 12 + dt.loc[1,"month"]
-            timeDifference = secondVisitDate - firstVisitDate
-            res = timeDifference <= 6
-
+        firstVisitDate =  dt.loc[0, "year"] * 12 + dt.loc[0, "month"]
+        secondVisitDate = dt.loc[1,"year"]  * 12 + dt.loc[1,"month"]
+        timeDifference = secondVisitDate - firstVisitDate
+        res = timeDifference <= 6
         return res
 
     def sumPolyps(self,dt):
