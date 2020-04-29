@@ -61,7 +61,7 @@ class DataSet:
 
         numberOfNULLs = int(self.missPercentage * self.nCol * self.nRow)
         indices       = np.arange((self.nCol * self.nRow)-1).tolist()          
-        return          np.sort( np.array( random.choice(indices,numberOfNULLs)))
+        return np.sort( np.array( random.choice(indices,numberOfNULLs)))
         
 
 
