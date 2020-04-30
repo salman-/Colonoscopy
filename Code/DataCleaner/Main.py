@@ -8,7 +8,7 @@ from ReduceStatesMethod1 import ReduceStatesMethod1
 from Stat import Stat
 from CombineRowsWithLessThan6MonthGap import CombineRowsWithLessThan6MonthGap
 
-"""
+
 
 originalDTPath = "./../datasets/Original DT/sample.csv"
 cleanedDTPath  = "./../datasets/Capsules/cleanedDataSet.csv"
@@ -30,19 +30,19 @@ rsm1 = ReduceStatesMethod1(inputDTPath)
 #rsm1.labelThePaitentsWithMoreThan6PolypsAs6_6_6()
 rsm1.labelThePaitentsWithCancersAs9_9_9()
 rsm1.output(outputDTPath)
-"""
+
 #----------------------------------------
 
 inputDTPath  = "./../datasets/Final_CleanedDT.csv"
 arwlt6mg = CombineRowsWithLessThan6MonthGap(inputDTPath)
 
 #----------------------------------------
-"""
+
 inputDTPath  = "./../datasets/Final_CleanedDT1.csv"
 outputDTPath = "./../datasets/StatDT.csv"
 stat = Stat(inputDTPath,outputDTPath)
 
-"""
+
 
 
 

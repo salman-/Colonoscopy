@@ -17,6 +17,7 @@ class Stat:
         stat = pd.DataFrame(data=counter, index=["Frquency"])
         stat = stat.transpose()
         stat.loc[:, "Probability"] = stat.loc[:, "Frquency"] / len(dt)
+        stat.index.names = ['State']
         self.saveOutputAsCSV(stat)
 
     def saveOutputAsCSV(self,dt):

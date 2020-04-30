@@ -12,8 +12,9 @@ from ColonoscopyDataSet import ColonoscopyDataSet
 #------------------------------------------------------------
 
 #dt = DataSet(40, 0.4, 4000, 20)                   # stateSize, missedPercentage, nRow, nCol
-dt = ColonoscopyDataSet()     
+dt = ColonoscopyDataSet()
 #psiLast = dt.firstPsi
+
 
 psiLast = Psi(dt.matrix, dt.stateSize)
 psiLast = psiLast.matrix
@@ -21,8 +22,8 @@ psiLast = psiLast.matrix
 #------------------------------------------------------------
 
 fillNa = FillNAs(dt)
-
 dt.matrix = fillNa.fillNA_First_Iteration( dt,psiLast )
+"""
 psi       = Psi(dt.matrix, dt.stateSize)                         # Get a new Psi
 psiNew    = psi.matrix
 
@@ -51,3 +52,5 @@ print("##-----------------------------------------------------------------------
 #print( "Is the LAST Psi and the ORIGINAL Psi converged? "+ str(fillNa.isPSIsConverged(psiNew,dt.firstPsi,0.4)))
 
 print( "Average time spent on each iteration "+ str(statistics.mean(sr.elapsedTime)))
+
+"""
