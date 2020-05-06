@@ -5,7 +5,11 @@ import math
 ## Emision matirix works based on Binomial Disribution
 class EmissionMatrix:
 
-    def __init__(self,numberOfStates):
+    def __init__(self,numberOfStates,dtPath):
+
+        self.dt = pd.read_csv(dtPath)
+        print("----------------------- DT ------------------------")
+        print(self.dt)
 
         self.smallSuccess = 0.75
         self.smallFailure = 0.25
@@ -17,11 +21,23 @@ class EmissionMatrix:
         self.largeFailure = 0.05
 
         self.stateList = []
-        self.stateList  = self.generateStates(self.stateList,numberOfStates)
+        #self.stateList  = self.generateStates(self.stateList,numberOfStates)
+        self.stateList = self.getStates(self.dt)
+        print("------------------------ stateList   -------------------------")
+        print(self.stateList)
         self.matrix = self.createEmissionMatrix(self.stateList)
         self.matrix = self.fillEmissionMatrix()
         self.writeToCSVFile(self.matrix)
 #-----------------------------------------------------------
+
+    def getStates(self,dt):
+
+        states = dt.loc[:,"Time0"]                   # Start by the first column and append the other columns to it
+        columnNumber = len(dt.columns.tolist())
+        for i in range(2, columnNumber ):
+            states.append( dt.iloc[:,i] )
+        return states.sort_values( ).unique()
+
     def generateStates(self, stateList, numberOfStates):
 
         for small in range(0, numberOfStates):    # in method1: numberOfStates=7

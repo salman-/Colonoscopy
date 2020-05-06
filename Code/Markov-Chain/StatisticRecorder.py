@@ -28,24 +28,21 @@ class StatisticRecorder:
         
         self.recordElapsedTime(elapsedTime)
         self.itterationsNo = self.itterationsNo + 1
-        diff = np.mean(abs(psiNew-psiLast))
-        absDiff = np.max(abs(psiNew-psiLast))
-        
-        number_of_Cells = (np.sum((psiNew-psiLast) >= threshold))
 
+        print("Iteration: " + str(self.itterationsNo))
 
+        diff = [abs(i) for i in (psiNew - psiLast).values.tolist()[0]]
+        mean = np.mean(diff)
+        print("Avg different value: "+ str(np.round( mean ,4)))
 
-        print("Average value of difference in between the 2 last Psies?")
-        print("Avg: "+ str(np.round( diff ,4))) 
-        print("Iteration: "+str(self.itterationsNo) )
-        
-        print("ABS Max Diff: "+ str(np.round( absDiff ,4))) 
-        print("Num cells not Converged:  " + str(number_of_Cells))
-        
+        absDiff = np.max(diff)
+        print("ABS Max Diff: "+ str(np.round( absDiff ,4)))
+
+        number_of_Cells = np.sum([elm >= threshold for elm in diff ])
+        print("Num cells which are not Converged:  " + str(number_of_Cells))
+
         print("Elapsed time:" , str(elapsedTime) )
-        
-        
-        
+
         print("________________________________________________________________________")
         
     def appendResults(self, patientsNo, VisitNo, Threshold, stateNo, missedPercentage, IterationNo,  averageTimePerIteration, IsConverged):

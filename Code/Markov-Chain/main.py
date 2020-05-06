@@ -10,27 +10,26 @@ from StatisticRecorder import StatisticRecorder
 from ColonoscopyDataSet import ColonoscopyDataSet
 
 #------------------------------------------------------------
-
+dtPath = './DataSets/historyMatrixOfPaitentsWithMoreThan1Colnoscopy.csv'
 #dt = DataSet(40, 0.4, 4000, 20)                   # stateSize, missedPercentage, nRow, nCol
-dt = ColonoscopyDataSet()
-#psiLast = dt.firstPsi
+dt = ColonoscopyDataSet(dtPath)
 
-
-psiLast = Psi(dt.matrix, dt.stateSize)
+psiLast = Psi(dt.matrix, dt.stateSize, dt.stateList)
 psiLast = psiLast.matrix
 
 #------------------------------------------------------------
 
-fillNa = FillNAs(dt)
+fillNa = FillNAs(dt,dtPath, dt.stateList)
+
 dt.matrix = fillNa.fillNA_First_Iteration( dt,psiLast )
-"""
-psi       = Psi(dt.matrix, dt.stateSize)                         # Get a new Psi
+
+
+psi       = Psi(dt.matrix, dt.stateSize, dt.stateList)                         # Get a new Psi
 psiNew    = psi.matrix
 
 #------------------------------------------------------------
 
 sr = StatisticRecorder()
-
 while(not(fillNa.isPSIsConverged(psiNew,psiLast,0.02))): #continue until convergance
     
     start_time = time.time()
@@ -39,7 +38,7 @@ while(not(fillNa.isPSIsConverged(psiNew,psiLast,0.02))): #continue until converg
 
     
     psiLast = psiNew                                  
-    psi     = Psi(dt.matrix, dt.stateSize)                         
+    psi     = Psi(dt.matrix, dt.stateSize, dt.stateList)
     psiNew  = psi.matrix
 
     sr.increaseCounter(psiNew,psiLast,np.round((time.time() - start_time),3),0.02)
@@ -50,7 +49,7 @@ print("##-----------------------------------------------------------------------
 #print(" Last psi is: ")
 #print(psiNew)      
 #print( "Is the LAST Psi and the ORIGINAL Psi converged? "+ str(fillNa.isPSIsConverged(psiNew,dt.firstPsi,0.4)))
-
+"""
 print( "Average time spent on each iteration "+ str(statistics.mean(sr.elapsedTime)))
 
 """
