@@ -17,7 +17,7 @@ class ColonoscopyDataSet:
         self.stateList     = self.getStates(self.matrix)    # List of states
         #self.printValue("stateList",self.stateList)
         self.stateSize     = len(self.stateList)
-        self.printValue("stateSize", self.stateSize)
+        #self.printValue("stateSize", self.stateSize)
 
         self.missedIndices = self.getMissedIndices(self.matrix)
         #self.printValue("missedIndices",self.missedIndices)

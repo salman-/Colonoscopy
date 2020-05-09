@@ -46,10 +46,8 @@ while(not(fillNa.isPSIsConverged(psiNew,psiLast,0.02))): #continue until converg
 
 print("##--------------------------------------------------------------------------------##")    
  
-#print(" Last psi is: ")
-#print(psiNew)      
-#print( "Is the LAST Psi and the ORIGINAL Psi converged? "+ str(fillNa.isPSIsConverged(psiNew,dt.firstPsi,0.4)))
-"""
-print( "Average time spent on each iteration "+ str(statistics.mean(sr.elapsedTime)))
+print(" Last psi is: ")
+print(psiNew)
+print( "Is the LAST Psi and the ORIGINAL Psi converged? "+ str(fillNa.isPSIsConverged(psiNew,dt.firstPsi,0.4)))
 
-"""
+print( "Average time spent on each iteration "+ str(statistics.mean(sr.elapsedTime)))

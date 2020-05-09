@@ -64,4 +64,4 @@ class Psi:
         return sum    
 
     def saveDataFrame(self,dt):
-        dt.to_csv("Psi.csv", sep=',', encoding='utf-8', index=True)
+        dt.to_csv("./DataSets/Psi.csv", sep=',', encoding='utf-8', index=True)

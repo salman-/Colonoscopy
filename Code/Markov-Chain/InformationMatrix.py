@@ -21,6 +21,7 @@ class InformationMatrix:
 
         self.matrix = self.createEmissionMatrix(self.stateList)
         self.informationMatrix = pd.DataFrame(self.fillEmissionMatrix())
+        self.fixTheLastCell(self.informationMatrix)    # The last cell 9_9_9 to 9_9_9 must be almost 1
         self.writeToCSVFile(self.informationMatrix)
 
 #-----------------------------------------------------------------------------------
@@ -80,6 +81,13 @@ class InformationMatrix:
         toState = {state: 0 for state in stateList}
         emissionMatrix = {state: toState.copy() for state in stateList}  # matrix to keep state transitions
         return emissionMatrix
+
+#----------------------------------------------------
+    def fixTheLastCell(self, dt):
+
+        nRow = np.shape(dt)[0]
+        nCol = np.shape(dt)[1]
+        dt.iloc[nRow-1,nCol-1] = 1 - np.sum(dt.iloc[nRow-1,:(nCol-2)])               # fix the last cell
 
 #------------------------------------------------------------------- Save EmissionMatrox into a .csv file
 
