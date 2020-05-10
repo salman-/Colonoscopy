@@ -19,8 +19,9 @@ class InformationMatrix:
         self.largeSuccess = 0.95
         self.largeFailure = 0.05
 
+        self.stateList = self.generateStates(self.stateList, 7)
         self.matrix = self.createEmissionMatrix(self.stateList)
-        self.informationMatrix = pd.DataFrame(self.fillEmissionMatrix())
+        self.informationMatrix = self.fillEmissionMatrix()
         self.fixTheLastCell(self.informationMatrix)    # The last cell 9_9_9 to 9_9_9 must be almost 1
         self.writeToCSVFile(self.informationMatrix)
 
@@ -33,6 +34,22 @@ class InformationMatrix:
         for i in range(2, columnNumber):
             states.append(dt.iloc[:, i])
         return states.sort_values().unique()
+
+    def generateStates(self, stateList, numberOfStates):
+        stateList = []
+        for small in range(0, numberOfStates):    # in method1: numberOfStates=7
+            for medium in range(0, numberOfStates):
+                for large in range(0, numberOfStates):
+                    if small + medium + large > (numberOfStates - 1):
+                        break
+                    else:
+                        state = str(small) + "_" + str(medium) + "_" + str(large)
+                        stateList.append(state)
+
+        stateList.append('6_6_6')  # "6_6_6" is only used in the Method1
+        #stateList.append('9_9_9')  # "9_9_9" is only used in the Method1
+
+        return stateList
 
 
     def fillEmissionMatrix(self):
@@ -53,7 +70,7 @@ class InformationMatrix:
                 self.matrix[observedStates][realState] = pro
 
             #print("-----------------------")
-        return self.matrix
+        return pd.DataFrame(self.matrix)
 
     def getPolypsNumber(self, state):
         res = list(map(int, str(state).split("_")))

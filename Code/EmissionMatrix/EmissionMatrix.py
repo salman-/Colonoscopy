@@ -50,6 +50,7 @@ class EmissionMatrix:
                         stateList.append(state)
 
         self.stateList.append('6_6_6')  # "6_6_6" is only used in the Method1
+        #self.stateList.append('9_9_9')  # "9_9_9" is only used in the Method1
 
         return stateList
 
