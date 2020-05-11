@@ -5,9 +5,8 @@ import math
 
 class InformationMatrix:
 
-    def __init__(self, dtPath, stateList):
+    def __init__(self,  stateList):
 
-        self.dt = pd.read_csv(dtPath)
         self.stateList = stateList
 
         self.smallSuccess = 0.75
@@ -19,21 +18,16 @@ class InformationMatrix:
         self.largeSuccess = 0.95
         self.largeFailure = 0.05
 
-        self.stateList = self.generateStates(self.stateList, 7)
+        #self.stateList = self.generateStates(self.stateList, 7)
+        self.stateList = stateList
+        #print("************************************************8")
+        #print(self.stateList)
         self.matrix = self.createEmissionMatrix(self.stateList)
         self.informationMatrix = self.fillEmissionMatrix()
         self.fixTheLastCell(self.informationMatrix)    # The last cell 9_9_9 to 9_9_9 must be almost 1
         self.writeToCSVFile(self.informationMatrix)
 
 #-----------------------------------------------------------------------------------
-
-    def getStates(self, dt):
-
-        states = dt.loc[:, "Time0"]  # Start by the first column and append the other columns to it
-        columnNumber = len(dt.columns.tolist())
-        for i in range(2, columnNumber):
-            states.append(dt.iloc[:, i])
-        return states.sort_values().unique()
 
     def generateStates(self, stateList, numberOfStates):
         stateList = []

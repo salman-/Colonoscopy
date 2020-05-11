@@ -19,8 +19,8 @@ psiLast = psiLast.matrix
 
 #------------------------------------------------------------
 
-fillNa = FillNAs(dt,dtPath, dt.stateList)
-"""
+fillNa = FillNAs(dt, dt.stateList)
+
 dt.matrix = fillNa.fillNA_First_Iteration( dt,psiLast )
 
 
@@ -51,4 +51,3 @@ print(psiNew)
 print( "Is the LAST Psi and the ORIGINAL Psi converged? "+ str(fillNa.isPSIsConverged(psiNew,dt.firstPsi,0.4)))
 
 print( "Average time spent on each iteration "+ str(statistics.mean(sr.elapsedTime)))
-"""

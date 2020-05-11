@@ -7,10 +7,10 @@ pd.set_option('display.width', 400)
 
 class FillNAs:
 
-    def __init__(self,dataSet,dtPath, stateList):
+    def __init__(self,dataSet, stateList):
         
         self.dataSet  = dataSet
-        self.im       = InformationMatrix(dtPath, stateList)
+        self.im       = InformationMatrix( stateList)
 
 #--------------------------------------------------------------
 
