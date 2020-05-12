@@ -9,13 +9,30 @@ class StatisticRecorder:
         self.itterationsNo = 1
         self.elapsedTime   = [1] 
         
-        self.results = pd.DataFrame( columns=         
-                                    ["PatientsNo","VisitNo","Threshold","StateNo",
+        self.results = pd.DataFrame( columns= ["PatientsNo","VisitNo","Threshold","StateNo",
                                      "missedPercentage","IterationNo","Time","IsConverged"] )
         
        
         
 #----------------------------------------------
+
+    def getAllValuesInDataframe(self,dt):
+        states = dt.iloc[:, 0]  # Start by the first column and append the other columns to it
+        columnNumber = len(dt.columns.tolist())
+
+        for i in range(1, columnNumber):
+            states = states.append(dt.iloc[:, i])
+
+        res = states.values
+        return res
+
+    def isPSIsConverged(self,psiNew,psiLast,threshold):
+
+        diff = abs(psiNew - psiLast )
+        allElements = self.getAllValuesInDataframe(diff)
+        res = np.sum(allElements > threshold)
+
+        return (res == 0)
         
     def recordElapsedTime(self, time ):
         self.elapsedTime.append(time)
@@ -31,15 +48,17 @@ class StatisticRecorder:
 
         print("Iteration: " + str(self.itterationsNo))
 
-        diff = [abs(i) for i in (psiNew - psiLast).values.tolist()[0]]
-        mean = np.mean(diff)
+        diff = abs(psiNew - psiLast )
+        allElements = self.getAllValuesInDataframe(diff)
+
+        mean = np.mean(allElements)
         print("Avg different value: "+ str(np.round( mean ,4)))
 
-        absDiff = np.max(diff)
+        absDiff = np.max(allElements)
         print("ABS Max Diff: "+ str(np.round( absDiff ,4)))
 
-        number_of_Cells = np.sum([elm >= threshold for elm in diff ])
-        print("Num cells which are not Converged:  " + str(number_of_Cells))
+        number_of_Cells = np.round(np.sum(allElements > threshold) / len(allElements),2)
+        print("Percentage of cells which are not Converged:  " + str(number_of_Cells))
 
         print("Elapsed time:" , str(elapsedTime) )
 

@@ -10,7 +10,7 @@ class FillNAs:
     def __init__(self,dataSet, stateList):
         
         self.dataSet  = dataSet
-        self.im       = InformationMatrix( stateList)
+        self.im       = InformationMatrix( stateList )   # The sum of all the polyps must be always less than 7
 
 #--------------------------------------------------------------
 
@@ -19,10 +19,11 @@ class FillNAs:
         for index,missedInex in dataSet.missedIndices.iterrows():
             row = missedInex["rowIndex"]
             col = missedInex["colIndex"]
+
             previousState = dataSet.matrix.iloc[row,col-1]
 
-            rowId = dataSet.randomlyChooseState(currentPsi.loc[:, previousState ].tolist())
-            dataSet.matrix.iloc[row,col] = self.im.getRandomStateFromInformationMatrix(rowId)
+            rowId = dataSet.randomlyChooseState(currentPsi.loc[:, previousState ].tolist())   # Get a new OBSERVED state based on psi
+            dataSet.matrix.iloc[row,col] = self.im.getRandomStateFromInformationMatrix(rowId) # Get a new REAL state
 
         return dataSet.matrix
 
@@ -46,6 +47,7 @@ class FillNAs:
             chanceMatrix = self.getChanceMatrix(dataSet,previousState,nextState,currentPsi)
 
             rowId  = dataSet.randomlyChooseState(chanceMatrix)
+
             dataSet.matrix[rowIndex,colIndex] = self.im.getRandomStateFromInformationMatrix(rowId)
 
         return dataSet.matrix
@@ -63,10 +65,3 @@ class FillNAs:
 
         weightedProb =  mul /  np.sum(mul)
         return weightedProb
-
-
-    def isPSIsConverged(self,psiNew,psiLast,threshold):
-        res = np.array((abs(psiNew-psiLast)<=threshold).values.tolist()).all()
-                                          # return true if all the difference between all the enteries is less than 0.02
-
-        return res

@@ -1,47 +1,54 @@
 import numpy as np
-import pandas as pa
 import numpy.random as random
-import random as rand
 import pandas as pd
-from numpy import nan
 pd.set_option('display.max_columns', None)
 pd.set_option('display.width', 200)
 
 class Psi:
     
-    def __init__(self, dataset, stateSize,stateList):
-        
-        self.matrix = self.obtainPsi(dataset, stateSize,stateList)
-        #print(self.matrix)
-        
-        
-####################################################################################
-####################################################################################
-####################################################################################
-   
-    
-    def obtainPsi(self, dataset, stateSize,stateList):
-    
-        changeMatrix = self.createStateChangeMatrix(dataset, stateSize,stateList)
+    def __init__(self, dataset,stateList ):
 
+        self.matrix = self.obtainPsi(dataset,stateList)
+
+####################################################################################
+####################################################################################
+####################################################################################
+    """def getStates(self,dt):
+
+        states = dt.loc[:,"Time0"]                   # Start by the first column and append the other columns to it
+        columnNumber = len(dt.columns.tolist())
+
+        for i in range(2, columnNumber ):
+            states = states.append( dt.iloc[:,i] )
+
+        states = states.dropna().unique()
+        states = np.sort(states)
+
+        return states"""
+
+
+
+    def createMatrixByStates(self,stateList):
         toState = {state: 0 for state in stateList}
-        psi = {state: toState.copy() for state in stateList}
-        psi = pd.DataFrame(psi)
-        
+        mat = {state: toState.copy() for state in stateList}
+        return pd.DataFrame(mat)
+
+    def obtainPsi(self, dataset,stateList):
+
+        psi = self.createMatrixByStates(stateList)
+        stateChangeMatrix = self.fillStateChangeMatrix(dataset,stateList)
+
         for fromState in stateList:
-            alphaArray = np.array(changeMatrix.loc[fromState,:].tolist())+1
+            alphaArray = np.array(stateChangeMatrix.loc[fromState,:].tolist())+1
             row = random.dirichlet( alphaArray,1)               # Use driclet distribution to generate the Psi
             psi[fromState] = row[0]
 
         self.saveDataFrame(psi)
-        return psi #np.round(res,5)"""
-    
-    def createStateChangeMatrix(self, dataset, stateSize, stateList):
+        return  psi #np.round(res,5)
 
-        toState = {state: 0 for state in stateList}
-        stateChangeMatrix = {state: toState.copy() for state in stateList}
-        stateChangeMatrix = pd.DataFrame(stateChangeMatrix)
+    def fillStateChangeMatrix(self, dataset,stateList):
 
+        stateChangeMatrix = self.createMatrixByStates(stateList)
         for fromState in stateList:
             for toState in stateList:
                 stateChangeMatrix.loc[fromState, toState] = self.stateChangeCounter(dataset, fromState, toState)
@@ -50,7 +57,6 @@ class Psi:
                 #      " stateChange: " + str(stateChangeMatrix.loc[fromState, toState]))
 
         return stateChangeMatrix
-        
 
     def stateChangeCounter(self, dataset, firstState,secondState):
         
