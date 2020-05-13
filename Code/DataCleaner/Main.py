@@ -8,7 +8,7 @@ from ReduceStatesMethod1 import ReduceStatesMethod1
 from Stat import Stat
 from CombineRowsWithLessThan6MonthGap import CombineRowsWithLessThan6MonthGap
 
-
+"""
 
 originalDTPath = "./../datasets/Original DT/sample.csv"
 cleanedDTPath  = "./../datasets/Capsules/cleanedDataSet.csv"
@@ -35,13 +35,16 @@ rsm1.output(outputDTPath)
 
 inputDTPath  = "./../datasets/Final_CleanedDT.csv"
 arwlt6mg = CombineRowsWithLessThan6MonthGap(inputDTPath)
-
+"""
 #----------------------------------------
 
 inputDTPath  = "./../datasets/Final_CleanedDT1.csv"
 outputDTPath = "./../datasets/StatDT.csv"
 stat = Stat(inputDTPath,outputDTPath)
 
+#stat.getDistribution("Nr_Small")    #Get distribution of small polyps
+#stat.getDistribution("Nr_Medium")   #Get distribution of medium polyps
+#stat.getDistribution("Nr_Large")    #Get distribution of large polyps
 
 
 
