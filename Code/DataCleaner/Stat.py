@@ -66,4 +66,79 @@ class Stat:
 
 
 
+    def getLocationDistribution(self,dtPath):
 
+        dt = pd.read_csv(dtPath)
+        dt.fillna(0, inplace=True)
+        dt = self.removeAllRowsWith0NumberOfPolyps(dt)
+
+        polypSum = np.sum((dt["Left_x"] + dt["Right _x"] + dt["Left_y"] + dt["Right _y"] +dt["Left"] + dt["Right "]).tolist())
+        print("polypSum: "+str(polypSum))
+        proximalSum = np.sum((dt["Right _x"] + dt["Right _y"] + dt["Right "]).tolist()) #right == proximal
+        proximalPro = proximalSum / polypSum
+        print("proximalSum: " + str(proximalSum)+ "proximalPro: "+str(proximalPro))
+        #left == = distal
+        distalSum = np.sum((dt["Left_x"] + dt["Left_y"] + dt["Left"]).tolist())
+        distalPro = distalSum / polypSum
+        print("distalSum: " + str(distalSum)+ " distalPro: "+str(distalPro))
+
+
+        dict = {
+            "Location" :  ["proximal","distal" ],
+            "Frequency" : [proximalPro,distalPro]
+        }
+
+        dt = pd.DataFrame(dict)
+        print(dt)
+        dt.to_csv("./../datasets/Location-Distribution.csv", sep=',', encoding='utf-8', index=True)
+
+
+    def getSizeLocationDistribution(self,dtPath):
+
+        dt = pd.read_csv(dtPath)
+        dt.fillna(0, inplace=True)
+        dt = self.removeAllRowsWith0NumberOfPolyps(dt)
+
+        # left == = distal   right == proximal
+        smallSum = np.sum((dt["Left_x"] + dt["Right _x"]).tolist())
+        smallDistallPro = np.sum((dt["Left_x"]).tolist())/smallSum
+        smallProximalPro = np.sum((dt["Right _x"]).tolist())/smallSum
+        print("smallSum: "+str(smallSum)+ " smallDistallPro: "+str(smallDistallPro)+ " smallProximalPro: "+str(smallProximalPro))
+
+        mediumSum = np.sum((dt["Left_y"] + dt["Right _y"]).tolist())
+        mediumDistallPro = np.sum((dt["Left_y"]).tolist())/mediumSum
+        mediumProximalPro = np.sum((dt["Right _y"]).tolist())/mediumSum
+        print("polypSum: "+str(mediumSum)+ " mediumDistallPro: "+str(mediumDistallPro)+ " mediumProximalPro: "+str(mediumProximalPro))
+
+        largeSum = np.sum((dt["Left"] + dt["Right "]).tolist())
+        largeDistallPro = np.sum((dt["Left"]).tolist())/largeSum
+        largeProximalPro = np.sum((dt["Right "]).tolist())/largeSum
+        print("largeSum: "+str(largeSum)+" largeDistallPro: "+str(largeDistallPro)+ " largeProximalPro: "+str(largeProximalPro))
+
+        dict = {
+            "Size": ["Small","Medium","Large"],
+            "Distal" :  [smallDistallPro,mediumDistallPro,largeDistallPro ],
+            "Proximal" : [smallProximalPro,mediumProximalPro,largeProximalPro]
+        }
+
+        dt = pd.DataFrame(dict)
+        print(dt)
+        dt.to_csv("./../datasets/Size-Location-Distribution.csv", sep=',', encoding='utf-8', index=True)
+
+
+    def removeAllRowsWith0NumberOfPolyps(self,dt):                                     # If noPolyp is 0 the number of polyps in right and left must be 0
+
+        for index, row in dt.iterrows():
+            #print(dt.loc[index,'Nr_Small'], dt.loc[index,'Left_x'], dt.loc[index,'Right _x'])
+            if not (row['Left_x'] + row['Right _x']) == row['Nr_Small'] :
+
+                dt.loc[index,'Left_x'] = 0
+                dt.loc[index, 'Right _x'] = 0
+
+                dt.loc[index, 'Left_y'] = 0
+                dt.loc[index, 'Right _y'] = 0
+
+                dt.loc[index, 'Left'] = 0
+                dt.loc[index, 'Right'] = 0
+
+        return dt

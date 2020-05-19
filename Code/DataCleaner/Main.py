@@ -20,7 +20,6 @@ QuantificationOfNumberOfSessiles(cleanedDTPath)
 DataSeperator(cleanedDTPath)         # Seprate different capsules and save them in .csv files
 DataMerger()                         # Merge the seperated capsules in order to obtain the patient status
 
-
 #----------------------------------------
 
 inputDTPath  = "./../datasets/Final DT/MergedDT.csv"
@@ -46,6 +45,9 @@ stat = Stat(inputDTPath,outputDTPath)
 #stat.getDistribution("Nr_Medium")   #Get distribution of medium polyps
 #stat.getDistribution("Nr_Large")    #Get distribution of large polyps
 
+inputDTPath  = "./../datasets/Final DT/MergedDT.csv"
+stat.getLocationDistribution(inputDTPath)
+stat.getSizeLocationDistribution(inputDTPath)
 
 
 
