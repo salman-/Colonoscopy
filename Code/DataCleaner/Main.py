@@ -41,13 +41,13 @@ inputDTPath  = "./../datasets/Final_CleanedDT1.csv"
 outputDTPath = "./../datasets/StatDT.csv"
 stat = Stat(inputDTPath,outputDTPath)
 
-#stat.getDistribution("Nr_Small")    #Get distribution of small polyps
-#stat.getDistribution("Nr_Medium")   #Get distribution of medium polyps
-#stat.getDistribution("Nr_Large")    #Get distribution of large polyps
+stat.getDistribution("Nr_Small")    #Get distribution of small polyps
+stat.getDistribution("Nr_Medium")   #Get distribution of medium polyps
+stat.getDistribution("Nr_Large")    #Get distribution of large polyps
 
 inputDTPath  = "./../datasets/Final DT/MergedDT.csv"
-stat.getLocationDistribution(inputDTPath)
-stat.getSizeLocationDistribution(inputDTPath)
+#stat.getLocationDistribution(inputDTPath)
+#stat.getSizeLocationDistribution(inputDTPath)
 
 
 
