@@ -54,7 +54,7 @@ class CombineRowsWithLessThan6MonthGap:
         dt.loc[0,"Nr_Small"]  = dt.loc[0,"Nr_Small"]+dt.loc[1,"Nr_Small"]
         dt.loc[0,"Nr_Medium"] = dt.loc[0,"Nr_Medium"]+dt.loc[1,"Nr_Medium"]
         dt.loc[0,"Nr_Large"]  =  dt.loc[0,"Nr_Large"]+dt.loc[1,"Nr_Large"]
-        dt.loc[0, "State"] = str(int(dt.loc[0,"Nr_Small"])) + "_" + str(int(dt.loc[0, "Nr_Medium"])) + "_" + str(int(dt.loc[1, "Nr_Large"]))
+        dt.loc[0, "State"] = str(int(dt.loc[0,"Nr_Small"])) + "_" + str(int(dt.loc[0, "Nr_Medium"])) + "_" + str(int(dt.loc[0, "Nr_Large"]))
         return dt.loc[0,:]
 
     def saveOutPut(self):
