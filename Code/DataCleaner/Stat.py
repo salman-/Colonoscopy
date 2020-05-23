@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 import collections
 
-
 class Stat:
 
     def __init__(self, dataSetPath,outputDTPath):
@@ -16,7 +15,7 @@ class Stat:
         overallNumberOfStates = len(states)
 
 
-        statDT = self.buildDataset()
+        statDT = self.buildDataset(dt)
         for index, row in statDT.iterrows():
             statDT.loc[index,'Frequency'] = states.count(row['State'])
             statDT.loc[index, 'Probability'] = statDT.loc[index,'Frequency']/overallNumberOfStates
@@ -25,8 +24,9 @@ class Stat:
         statDT.sort_values('stateIndex')
         self.saveOutputAsCSV(statDT)
 
-    def buildDataset(self):
-        stateList = self.generateStates(25)
+    def buildDataset(self,dt):
+        maxPolyp = self.getMaximumNumberOfPolyps(dt)
+        stateList = self.generateStates(maxPolyp)
         stateIndex = list(range(len(stateList)))
         dict = {    "stateIndex" : stateIndex,
                     "State": stateList   }
@@ -35,6 +35,13 @@ class Stat:
         stat["Frequency"] = np.nan
         stat["Probability"] =np.nan
         return stat
+
+    def getMaximumNumberOfPolyps(self,dt):
+        sum = dt["Nr_Small"].astype(float) + dt["Nr_Medium"].astype(float) + dt["Nr_Large"].astype(float)
+        sumOfAllPolyps = int(np.max((sum).tolist()))
+        return sumOfAllPolyps
+
+
 
     def generateStates(self, numberOfStates):
 
@@ -53,7 +60,7 @@ class Stat:
     def saveOutputAsCSV(self,dt):
         dt.to_csv(self.outputDTPath, sep=',', encoding='utf-8', index=False)
 
-    def getDistribution(self,columnName):
+    def getSizeDistribution(self, columnName):
 
         dtPath = "./../datasets/Final_Cleaned_Not_Aggregated(6Month)_And_Without_State_6_6_6.csv"
         dt = pd.read_csv(dtPath, error_bad_lines=False, index_col=False, dtype='unicode')

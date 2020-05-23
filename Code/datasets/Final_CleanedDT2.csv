@@ -1,9 +1,0 @@
-facility,patient_ID,year,month,dt,Nr_Small,Nr_Medium,Nr_Large,Adenocarcinoma,State,id
-Facility1,1,2005,2,0,3,3,1,0,3_3_1,1
-Facility1,1,2006,8,0,1,0,1,0,0_0_0,4
-Facility1,5,2007,2,0,1,1,0,0,0_0_0,5
-Facility1,5,2007,9,0,5,1,0,0,5_1_0,6
-Facility1,5,2008,4,0,0,3,6,0,0_0_0,8
-Facility1,8,2004,7,131,3,7,1,0,0_0_0,9
-Facility1,8,2007,7,0,1,0,0,0,0_0_0,10
-Facility1,8,2009,5,2239,16,4,12,0,16_4_6,11
