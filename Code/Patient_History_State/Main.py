@@ -9,7 +9,7 @@ minYear = np.min(dt.year)
 maxYear = np.max(dt.year)
 
 historyMatrix = pd.DataFrame()
-
+print("=======================================> Generate History Matrix")
 for ind in dt.index:
      facility = dt['facility'][ind]
      paitent_ID = dt['patient_ID'][ind]
@@ -17,6 +17,8 @@ for ind in dt.index:
      state = dt['State'][ind]
      historyMatrix.loc[paitent_ID,year] = state
      historyMatrix.loc[paitent_ID, "0Facility"] = facility
+     print(ind)
+     print("-------------------------")
 
 historyMatrix.columns = historyMatrix.columns.astype(str)
 historyMatrix = historyMatrix.reindex(sorted( historyMatrix.columns  ), axis=1)
@@ -24,6 +26,7 @@ historyMatrix = historyMatrix.reindex(sorted( historyMatrix.columns  ), axis=1)
 """
   Shift all the states to the very first column. So, the first column always have an state
 """
+print("=======================================> SHIFTING")
 for rowNumber in range(len(historyMatrix)):
 
     firstNonNaColName = historyMatrix.iloc[rowNumber, 1:].first_valid_index()   # finds the name of the first column with non NA value (exclude the patient_ID)

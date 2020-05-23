@@ -9,17 +9,17 @@ from Stat import Stat
 from CombineRowsWithLessThan6MonthGap import CombineRowsWithLessThan6MonthGap
 
 
-"""
+
 originalDTPath = "./../datasets/Original DT/sample.csv"
 cleanedDTPath  = "./../datasets/Capsules/cleanedDataSet.csv"
 
 PolypExtractor(originalDTPath)        # Set dataset polyp based
 PolypSizeCleaner(cleanedDTPath)       # Validate the Size of column before obtain the final status
-#RestructureLocation(cleanedDTPath)    # Colon has 13 different location. Here we categorize them into Right and Left
+RestructureLocation(cleanedDTPath)    # Colon has 13 different location. Here we categorize them into Right and Left
 QuantificationOfNumberOfSessiles(cleanedDTPath)
 DataSeperator(cleanedDTPath)         # Seprate different capsules and save them in .csv files
 DataMerger()                         # Merge the seperated capsules in order to obtain the patient status
-
+"""
 #----------------------------------------
 
 inputDTPath  = "./../datasets/Final DT/MergedDT.csv"
@@ -36,7 +36,7 @@ inputDTPath  = "./../datasets/Final_CleanedDT.csv"
 arwlt6mg = CombineRowsWithLessThan6MonthGap(inputDTPath)
 
 #----------------------------------------
-"""
+
 inputDTPath  = "./../datasets/Final_CleanedDT.csv"
 outputDTPath = "./../datasets/StatDT.csv"
 stat = Stat(inputDTPath,outputDTPath)
@@ -45,7 +45,7 @@ stat.getSizeDistribution("Nr_Sum")    #Get distribution of small polyps
 stat.getSizeDistribution("Nr_Small")    #Get distribution of small polyps
 stat.getSizeDistribution("Nr_Medium")   #Get distribution of medium polyps
 stat.getSizeDistribution("Nr_Large")    #Get distribution of large polyps
-"""
+
 inputDTPath  = "./../datasets/Final DT/MergedDT.csv"
 #stat.getLocationDistribution(inputDTPath)
 #stat.getSizeLocationDistribution(inputDTPath)
