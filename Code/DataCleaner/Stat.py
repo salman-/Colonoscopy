@@ -41,6 +41,11 @@ class Stat:
         sumOfAllPolyps = int(np.max((sum).tolist()))
         return sumOfAllPolyps
 
+    def addSumOfPolypSizeToDT(self,dt):
+        dt["Nr_Sum"] = dt["Nr_Small"].astype(float) + dt["Nr_Medium"].astype(float) + dt["Nr_Large"].astype(float)
+        return dt
+
+
 
 
     def generateStates(self, numberOfStates):
@@ -65,6 +70,7 @@ class Stat:
         dtPath = "./../datasets/Final_Cleaned_Not_Aggregated(6Month)_And_Without_State_6_6_6.csv"
         dt = pd.read_csv(dtPath, error_bad_lines=False, index_col=False, dtype='unicode')
         #print(dt[columnName])
+        dt = self.addSumOfPolypSizeToDT(dt)
         values = dt.loc[:,columnName].value_counts()
         sum = np.sum(values)
         pro = (values/sum).to_frame()
