@@ -31,6 +31,7 @@ for rowNumber in range(len(historyMatrix)):
 
     firstNonNaColName = historyMatrix.iloc[rowNumber, 1:].first_valid_index()   # finds the name of the first column with non NA value (exclude the patient_ID)
     firstNonNaIndex = historyMatrix.columns.get_loc(firstNonNaColName)  # finds the index of the first column with non NA value
+    print("rowNumber: "+str(rowNumber))
 
     for colNumber in range(firstNonNaIndex, len(historyMatrix.columns)):
 
