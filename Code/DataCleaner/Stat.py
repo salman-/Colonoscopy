@@ -14,7 +14,6 @@ class Stat:
         states = dt["State"].tolist()
         overallNumberOfStates = len(states)
 
-
         statDT = self.buildDataset(dt)
         for index, row in statDT.iterrows():
             statDT.loc[index,'Frequency'] = states.count(row['State'])
@@ -44,9 +43,6 @@ class Stat:
     def addSumOfPolypSizeToDT(self,dt):
         dt["Nr_Sum"] = dt["Nr_Small"].astype(float) + dt["Nr_Medium"].astype(float) + dt["Nr_Large"].astype(float)
         return dt
-
-
-
 
     def generateStates(self, numberOfStates):
 

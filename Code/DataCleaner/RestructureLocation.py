@@ -8,7 +8,7 @@ class RestructureLocation:
         self.cleanedDataSet = pd.read_csv(dataSetPath, error_bad_lines=False, index_col=False, dtype='unicode')
         self.setRight()
         self.setLeft()
-        self.removeAllLocationsButRightAndLeft()
+        #self.removeAllLocationsButRightAndLeft()
         self.writeToFile(dataSetPath)
 
     def setRight(self):
