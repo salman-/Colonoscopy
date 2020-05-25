@@ -23,7 +23,7 @@ class PolypSizeCleaner:
         self.cleanedDataSet[" Size (in mm)"] = self.cleanedDataSet[" Size (in mm)"].fillna(0)
         self.cleanedDataSet[' Size (in mm)'] = self.cleanedDataSet[' Size (in mm)'].astype(str)
 
-        self.cleanedDataSet[' Size (in mm)'] = self.cleanedDataSet[' Size (in mm)'].str.findall("(\d+)").apply(lambda x: sum(map(float, x))/len(x))
+        self.cleanedDataSet[' Size (in mm)'] = self.cleanedDataSet[' Size (in mm)'].str.findall("(\d+)").apply(lambda x: sum(map(float, x))/len(x))   # Get the average of values such as "3-5mm"
         self.cleanedDataSet[" Size (in mm)"] = self.cleanedDataSet[" Size (in mm)"].astype(float)
 
 
@@ -33,10 +33,10 @@ class PolypSizeCleaner:
                                 (self.cleanedDataSet[" Size (in mm)"].between(0,5)), "Size of Sessile in Words"] = "Small"
 
         self.cleanedDataSet.loc[ self.cleanedDataSet["Size of Sessile in Words"].isna() &
-                                (self.cleanedDataSet[" Size (in mm)"].between(5,10)), "Size of Sessile in Words"] = "Medium"
+                                (self.cleanedDataSet[" Size (in mm)"].between(6,9)), "Size of Sessile in Words"] = "Medium"
         
         self.cleanedDataSet.loc[ self.cleanedDataSet["Size of Sessile in Words"].isna() &
-                                 (10 < self.cleanedDataSet[" Size (in mm)"]), "Size of Sessile in Words"] = "Large"
+                                 (10 <= self.cleanedDataSet[" Size (in mm)"]), "Size of Sessile in Words"] = "Large"
 
 
     def writeToFile(self):
