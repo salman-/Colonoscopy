@@ -23,7 +23,7 @@ class CombineRowsWithLessThan6MonthGap:
                     selectedRows = self.get2rows(patientDT,rowIndex)
                     rowIndex = rowIndex + 1
 
-                    res = self.isTheTimeDifferenceMoreThan6Month(selectedRows)
+                    res = self.isTheTimeDifferenceLessThan6Month(selectedRows)
                     if res:
                         aggregatedRow = self.sumPolyps(selectedRows)
                         self.mainDT = self.mainDT[~self.mainDT.id.isin(selectedRows.id.tolist())]
@@ -41,12 +41,12 @@ class CombineRowsWithLessThan6MonthGap:
     def get2rows(self, patientDT,index):
         return patientDT.iloc[index:(index+2), :]
 
-    def isTheTimeDifferenceMoreThan6Month(self,dt):
+    def isTheTimeDifferenceLessThan6Month(self, dt):
         dt = dt.reset_index(drop=True)
         firstVisitDate =  dt.loc[0, "year"] * 12 + dt.loc[0, "month"]
         secondVisitDate = dt.loc[1,"year"]  * 12 + dt.loc[1,"month"]
         timeDifference = secondVisitDate - firstVisitDate
-        res = timeDifference <= 6
+        res = timeDifference < 6
         return res
 
     def sumPolyps(self,dt):
