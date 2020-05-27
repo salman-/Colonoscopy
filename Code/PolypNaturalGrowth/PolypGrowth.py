@@ -30,6 +30,9 @@ class PolypGrowth:
             polypGrowth = addEmptyRowToDT(polypGrowth)
         """
 
+    def getValidMinimumSequence(self,statusList,index):
+        return statusList[index:].tolist()
+
     def setPaitent_IDToPolypGrowthCurrentRow(self,paitentID):
         nRow = np.shape(self.polypGrowth)[0]
         self.polypGrowth.iloc[nRow, "Paitent_ID"] = paitentID
@@ -43,15 +46,18 @@ class PolypGrowth:
         return self.polypGrowth
 
     def createState(self,polypNumberList):
+
         polypsInString = list(map(str, polypNumberList))
         return polypsInString[0] + "_" + polypsInString[1] + "_" + polypsInString[2]
 
     def subsidze2States(self,realState, observedState):
+        #print("realState:------", realState)
         realState = self.breakToPolypsNumber(realState)
         observedState = self.breakToPolypsNumber(observedState)
-        res = self.createState([realState[0] - observedState[0],  # Small Polyps diff
-                           realState[1] - observedState[1],  # Medium Polyps diff
-                           realState[2] - observedState[2]])  # Large Polyps diff
+        small =np.abs(realState[0] - observedState[0])
+        medium = np.abs(realState[1] - observedState[1])
+        large = np.abs(realState[2] - observedState[2])
+        res = self.createState([small,  medium, large])  # Large Polyps diff
         return res
 
     def breakToPolypsNumber(self,state):
