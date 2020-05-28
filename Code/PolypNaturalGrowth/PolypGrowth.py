@@ -5,47 +5,42 @@ import math
 class PolypGrowth:
 
     def __init__(self,outputDtPath):
-        self.realStatesDT = pd.read_csv("./../datasets/state_seq_simulated.csv")
-        self.realStatesDT.fillna("-1", inplace=True)
-        print("----------------------- realStatesDT ----------------------------")
-        print(self.realStatesDT.iloc[0, :].tolist())
-        print("----------------------- observedStatesDT ------------------------")
-        self.observedStatesDT = pd.read_csv("./../datasets/historyMatrixOfPaitentsWithMoreThan1Colnoscopy.csv")
-        self.observedStatesDT.fillna("-1", inplace=True)
-        print(self.observedStatesDT.iloc[0, :].tolist())
-        print("-----------------------------------------------------------------")
-        self.polypGrowth = pd.DataFrame([], columns=self.observedStatesDT.columns)
 
+        self.realStatesDT = pd.read_csv("./../datasets/state_seq_simulated.csv").fillna("-1")
+        self.observedStatesDT = pd.read_csv("./../datasets/historyMatrixOfPaitentsWithMoreThan1Colnoscopy.csv").fillna("-1")
+        self.polypGrowth = pd.DataFrame([], columns=self.observedStatesDT.columns)
+        self.index = 0
         paitentList = self.realStatesDT["Paitent_ID"].unique().tolist()
-        #print("paitentList: ",paitentList)
 
         for paitent in paitentList:
             dt1 = self.getAllRowsForAPaitent_ID(self.realStatesDT,paitent)
-            #print("---------------- dt1 ----------------",paitent)
-            #print(dt1)
             dt2 = self.getAllRowsForAPaitent_ID(self.observedStatesDT,paitent)
-            #print("----------------- dt2 ---------------",paitent)
-            #print(dt2)
-            #print("-------------------------------------")
-            for i in range(0,np.shape(dt1)[0]+1):
-                realStatesList = self.realStatesDT.loc[i,:].tolist()
-                for j in range(0, np.shape(dt2)[0]+1):
-                    #print("dt2 rows :    ",np.shape(dt2)[0]," indices: ",list(  range(0, np.shape(dt2)[0])  ))
-                    observedStatesList = self.observedStatesDT.loc[j, :].tolist()
-                    print("realStatesList",realStatesList)
-                    print("observedStatesList", observedStatesList)
-                    print("--------------------------------------")
-                    self.subtract2Rows(self.observedStatesDT.columns.tolist(),realStatesList,observedStatesList)
-
+            self.getPolypGrowth(dt1, dt2)
+        self.removeRowsWith1Entery()
         self.writeToFile(outputDtPath)
 
 
+    def getPolypGrowth(self,dt1,dt2):
+
+        for index1, row1 in dt1.iterrows():
+            realStatesList = row1.tolist()
+            for index2, row2 in dt2.iterrows():
+                observedStatesList = row2.tolist()
+                print("realStatesList    ", realStatesList)
+                print("observedStatesList", observedStatesList)
+                print("--------------------------------------")
+                self.subtract2Rows(self.observedStatesDT.columns.tolist(), realStatesList, observedStatesList)
+
+    def removeRowsWith1Entery(self):
+        dt = self.polypGrowth.iloc[:, 2:].notna()
+        indices = np.where(dt.apply(np.sum, axis=1).tolist())[0].tolist()
+        self.polypGrowth = self.polypGrowth.iloc[indices, :]
 
     def getAllRowsForAPaitent_ID(self,dt,paitent_ID):
         return dt[dt.Paitent_ID == paitent_ID]
 
     def subtract2Rows(self,columnsList, realStatesList, observedStatesList):
-        index = 0
+
         for i in range(1, len(columnsList) - 1):  # i is the column index which contains state, 0 column is paiten_ID last column is not needed
 
             remainPolyp = realStatesList[i]  # Get states for a given row (row = 0)
@@ -53,17 +48,17 @@ class PolypGrowth:
 
             if not observedPolyp == "-1":
                 self.addEmptyRowToPolypGrowth()
-                self.polypGrowth.iloc[index, 0] = realStatesList[0]                   # Set Paitent_ID in polypGrowth DT
-                self.polypGrowth.iloc[index, 1] = self.subsidze2States(remainPolyp, observedPolyp)
+                self.polypGrowth.iloc[self.index, 0] = realStatesList[0]                   # Set Paitent_ID in polypGrowth DT
+                self.polypGrowth.iloc[self.index, 1] = self.subsidze2States(remainPolyp, observedPolyp)
                 col = 2
                 for state in realStatesList[(i + 1):]:                     # أNavigate throw the list to find next State
 
                     if state == "-1":
-                        self.polypGrowth.iloc[index, col] = math.nan
+                        self.polypGrowth.iloc[self.index, col] = math.nan
                         col = col + 1
                     else:
-                        self.polypGrowth.iloc[index, col] = state
-                        index = index + 1
+                        self.polypGrowth.iloc[self.index, col] = state
+                        self.index = self.index + 1
                         break
         return self.polypGrowth
 
