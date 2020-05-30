@@ -21,7 +21,7 @@ class PolypSizeCleaner:
         self.getMinAndMax(0)
         self.getMinAndMax(13)
 
-    def getMinAndMax(self,index):   # Must return min and max for each range
+    def getMinAndMax(self,index):   # Must return min and max for each range.
         sizeList = ???
         print("index: ",index," min:  ",np.min(sizeList)," max:  ", np.max(sizeList))
         return ???
