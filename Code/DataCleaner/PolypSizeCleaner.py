@@ -6,8 +6,25 @@ class PolypSizeCleaner:
     def __init__(self, dataSetPath):
 
         self.cleanedDataSet = pd.read_csv(dataSetPath, error_bad_lines=False, index_col=False, dtype='unicode')
-        self.setSizeInWords()
+        self.getSizeRange()
+        #self.setSizeInWords()
+        self.writeToFile()
 
+    def getSizeRange(self):
+        #self.cleanedDataSet[' Size-Range'] = self.cleanedDataSet[' Size (in mm)'].str.findall("(\d+)")
+        self.cleanedDataSet.drop([' Size-Range'], axis=1,inplace=True)
+        if ' Size (in mm)' in self.cleanedDataSet.columns:
+            self.cleanedDataSet[' Size (in mm)'].fillna(0,inplace=True)
+        col = self.cleanedDataSet[' Size (in mm)'].str.findall("(\d+)").apply(lambda x: list(map(float, x)))
+
+        self.cleanedDataSet.insert(45, ' Size-Range', col )
+        self.getMinAndMax(0)
+        self.getMinAndMax(13)
+
+    def getMinAndMax(self,index):
+        sizeList = ???
+        print("index: ",index," min:  ",np.min(sizeList)," max:  ", np.max(sizeList))
+        return ???
 
     def setSizeInWords(self):
 
