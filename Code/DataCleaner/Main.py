@@ -14,12 +14,16 @@ cleanedDTPath  = "./../datasets/Capsules/cleanedDataSet.csv"
 
 #PolypExtractor(originalDTPath)        # Set dataset polyp based
 
-PolypSizeCleaner(cleanedDTPath)       # Validate the Size of column before obtain the final status
+#QuantificationOfNumberOfSessiles(cleanedDTPath)
+
+ps = PolypSizeCleaner(cleanedDTPath)       # Validate the Size of column before obtain the final status
+
+print(ps.isPolypNrBiggerThanPolypSizes(6))
 
 """
 RestructureLocation(cleanedDTPath)    # Colon has 13 different location. Here we categorize them into Right and Left
 
-QuantificationOfNumberOfSessiles(cleanedDTPath)
+#QuantificationOfNumberOfSessiles(cleanedDTPath)
 
 DataSeperator(cleanedDTPath)         # Seprate different capsules and save them in .csv files
 
