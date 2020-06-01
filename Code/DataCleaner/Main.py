@@ -16,7 +16,7 @@ PolypExtractor(originalDTPath)        # Set dataset polyp based
 
 QuantificationOfNumberOfSessiles(cleanedDTPath)
 
-ps = PolypSizeCleaner(cleanedDTPath)       # Validate the Size of column before obtain the final status
+PolypSizeCleaner(cleanedDTPath)       # Validate the Size of column before obtain the final status
 
 #print(ps.isPolypNrBiggerThanPolypSizes(6))
 

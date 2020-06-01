@@ -8,7 +8,7 @@ class PolypSizeCleaner:
     def __init__(self, dataSetPath):
         """small_medium_large  = [.76,.16,.07]
         small_medium = [.82,.18]
-        medium_large  = [.7,.3]
+        medium_large  = [.7,.3]    ##
         self.index = 0"""
         self.cleanedDataSet = pd.read_csv(dataSetPath, error_bad_lines=False, index_col=False, dtype='unicode')
         self.polypsInSize = pd.DataFrame([], columns=self.cleanedDataSet.columns)  # After polyps No is distributed into size categorize,
