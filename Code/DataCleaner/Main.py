@@ -9,16 +9,16 @@ from CombineRowsWithLessThan6MonthGap import CombineRowsWithLessThan6MonthGap
 
 
 
-originalDTPath = "./../datasets/Original DT/sample.csv"
+originalDTPath = "./../datasets/Original DT/sample111.csv"
 cleanedDTPath  = "./../datasets/Capsules/cleanedDataSet.csv"
 
-#PolypExtractor(originalDTPath)        # Set dataset polyp based
+PolypExtractor(originalDTPath)        # Set dataset polyp based
 
-#QuantificationOfNumberOfSessiles(cleanedDTPath)
+QuantificationOfNumberOfSessiles(cleanedDTPath)
 
 ps = PolypSizeCleaner(cleanedDTPath)       # Validate the Size of column before obtain the final status
 
-print(ps.isPolypNrBiggerThanPolypSizes(6))
+#print(ps.isPolypNrBiggerThanPolypSizes(6))
 
 """
 RestructureLocation(cleanedDTPath)    # Colon has 13 different location. Here we categorize them into Right and Left
