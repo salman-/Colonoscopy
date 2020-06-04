@@ -1,24 +1,26 @@
-from PolypExtractor   import PolypExtractor
-from PolypSizeCleaner import PolypSizeCleaner
-from RestructureLocation import RestructureLocation
+from PolypExtractor                   import PolypExtractor
+from PolypSizeCleaner                 import PolypSizeCleaner
+from RestructureLocation              import RestructureLocation
 from QuantificationOfNumberOfSessiles import QuantificationOfNumberOfSessiles
-from DataSeperator    import DataSeperator
-from DataMerger       import DataMerger
-from ReduceStatesMethod1 import ReduceStatesMethod1
+from DataSeperator                    import DataSeperator
+from DataMerger                       import DataMerger
+from ReduceStatesMethod1              import ReduceStatesMethod1
 from CombineRowsWithLessThan6MonthGap import CombineRowsWithLessThan6MonthGap
+from PolypSizeFixMultipleCategory     import PolypSizeFixMultipleCategory
 
 
 
-originalDTPath = "./../datasets/Original DT/sample111.csv"
+originalDTPath = "./../datasets/Original DT/sample.csv"
 cleanedDTPath  = "./../datasets/Capsules/cleanedDataSet.csv"
 
 PolypExtractor(originalDTPath)        # Set dataset polyp based
 
 QuantificationOfNumberOfSessiles(cleanedDTPath)
 
-PolypSizeCleaner(cleanedDTPath)       # Validate the Size of column before obtain the final status
+PolypSizeFixMultipleCategory(cleanedDTPath)
 
-#print(ps.isPolypNrBiggerThanPolypSizes(6))
+#PolypSizeCleaner(cleanedDTPath)       # Validate the Size of column before obtain the final status
+
 
 """
 RestructureLocation(cleanedDTPath)    # Colon has 13 different location. Here we categorize them into Right and Left

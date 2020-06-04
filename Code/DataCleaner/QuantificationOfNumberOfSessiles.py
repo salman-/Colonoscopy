@@ -52,7 +52,8 @@ class QuantificationOfNumberOfSessiles:
         allEvents = data.loc[:, 'Number of sessiles'].dropna(axis = 0, how ='any')
         uniqEvents = allEvents.unique().tolist()
 
-        uniqEvents.remove('3+')
+        if '3+' in uniqEvents:
+            uniqEvents.remove('3+')
 
         uniqEvents = [int(i) for i in uniqEvents]
         uniqEvents.sort()
