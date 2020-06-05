@@ -42,22 +42,22 @@ for rowNumber in range(len(historyMatrix)):
 """
 Rename the columns
 """
-lst = ["patient_ID", "facility"]
+lst = ['patient_ID',"facility"]
 
 for i in range(0 , len(historyMatrix.columns)-2):
     lst.append("Time{num}".format(num=i))
 
+print("LIST OF COLUMN NAMES:       ",lst)
 historyMatrix.columns = lst
-
+#historyMatrix.set_index('patient_ID', inplace=True)
+historyMatrix.to_csv("./../datasets/historyMatrix.csv", sep=',', encoding='utf-8',index=True)
 
 """
 Remove the paitents which has only 1 colonoscopy result
 """
 
-dt = historyMatrix.iloc[:,3:].notna()
+dt = historyMatrix.loc[:,["facility","patient_ID","Time0"]].notna()
 indices = np.where(dt.apply(np.sum, axis=1).tolist())[0].tolist()
 historyMatrixOfPaitentsWithMoreThan1Colnoscopy = historyMatrix.iloc[indices,:]
 
-
-historyMatrix.to_csv("./../datasets/historyMatrix.csv", sep=',', encoding='utf-8')
 historyMatrixOfPaitentsWithMoreThan1Colnoscopy.to_csv("./../datasets/historyMatrixOfPaitentsWithMoreThan1Colnoscopy.csv", sep=',', encoding='utf-8')
