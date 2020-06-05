@@ -35,7 +35,8 @@ class DataSeperator:
 
     def createPaitentPolypTable(self):
         col = ['patient_ID','PolypID']
-        dt = self.dataset.iloc[:, np.r_[1, 3]]  # Col 1 is PolypID and 3 is patient_ID
+        #dt = self.dataset.iloc[:, np.r_[1, 3]]  # Col 1 is PolypID and 3 is patient_ID
+        dt = self.dataset.loc[:, col]
         """print("=======================  createPaitentPolypTable ============================")
         print(dt.columns)"""
 
@@ -47,8 +48,8 @@ class DataSeperator:
 
     def seperatePolyp(self):
         col = ['PolypID', 'Number of sessiles', 'Size of Sessile in Words', 'Shape']
-        #polyp = self.dataset.loc[:, col]
-        polyp = self.dataset.iloc[:, np.r_[1, 42:45]]                                                   # 1 = PolyID
+        polyp = self.dataset.loc[:, col]
+        #polyp = self.dataset.iloc[:, np.r_[1, 42:45]]                                                   # 1 = PolyID
         #print("======================= seperatePolyp ============================")
         #print(polyp.columns)
         polyp.to_csv("./../datasets/Capsules/polyp.csv", sep=',', encoding='utf-8', index=False)
@@ -68,8 +69,8 @@ class DataSeperator:
 
     def sperateCancerStatus(self):
         col = ['PolypID', 'Adenocarcinoma', 'Villous', 'adenoma', 'high grade dysplasia', 'Biopsy', 'adenomatous', 'Adenomatous', 'Tubular']
-        #cancerStatus = self.dataset.loc[:, col]
-        cancerStatus = self.dataset.iloc[:, np.r_[1, 74:82]]                   # 2 = Paitent_ID and 81 = Tubular
+        cancerStatus = self.dataset.loc[:, col]
+        #cancerStatus = self.dataset.iloc[:, np.r_[1, 74:82]]                   # 2 = Paitent_ID and 81 = Tubular
         #print("======================= sperateCancerStatus ============================")
         #print(cancerStatus.columns)
 

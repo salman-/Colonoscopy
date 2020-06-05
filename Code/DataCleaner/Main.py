@@ -23,7 +23,7 @@ PolypSizeCleaner(cleanedDTPath)       # Validate the Size of column before obtai
 DataSeperator(cleanedDTPath)         # Seprate different capsules and save them in .csv files
 
 DataMerger()                         # Merge the seperated capsules in order to obtain the patient status
-"""
+
 #----------------------------------------
 
 inputDTPath  = "./../datasets/Final DT/MergedDT.csv"
@@ -41,5 +41,5 @@ arwlt6mg = CombineRowsWithLessThan6MonthGap(inputDTPath)
 
 #----------------------------------------
 
-
+"""
 """

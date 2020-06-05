@@ -33,22 +33,17 @@ class DataMerger:         # After spliting the main dataset to small capsules th
 
         dt = dt[ dt["Size of Sessile in Words"]== size]
 
-        dt = dt.drop(["PolypID"], axis=1)
+        dt = dt.drop(["PolypID","Number of Capsules","Shape","Size of Sessile in Words"], axis=1)
         pathToSaveCSV = "./../datasets/Polyps/{0}.csv".format(size)
         dt.to_csv(pathToSaveCSV, sep=',', encoding='utf-8', index=False)
 
     def mergAllPolypsOfPaitents(self):      # Each user might have different size of polyps. Aggregate these polyps in 1 row
 
         smallPolyps = pd.read_csv("./../datasets/Polyps/Small.csv")
-
         mediumPolyps = pd.read_csv("./../datasets/Polyps/Medium.csv")
-
         largPolyps   = pd.read_csv("./../datasets/Polyps/Large.csv")
 
-        patient      = pd.read_csv("./../datasets/Capsules/patient.csv")
-
         MergedDT = smallPolyps.merge(mediumPolyps, how="outer",on=['facility','patient_ID','year','month']).merge(largPolyps, how="outer",on=['facility','patient_ID','year','month'])
-        #MergedDT = patient.merge(MergedDT, how="inner",on=['facility','patient_ID','year','month'])
 
         MergedDT.to_csv("./../datasets/Final DT/MergedDT.csv", sep=',', encoding='utf-8', index=False)
 
@@ -58,7 +53,6 @@ class DataMerger:         # After spliting the main dataset to small capsules th
                            polypDT.loc[:, "high grade dysplasia"] + polypDT.loc[:, "Adenomatous-capital"] + \
                            polypDT.loc[:, "Tubular"]
 
-       # polyDT.iloc[sumOfPathologies == 0, 1] = 0
         selectedRows = np.arange(len(polypDT))[sumOfPathologies == 0]
         polypDT.iloc[selectedRows, 1] = 0
 
@@ -67,14 +61,12 @@ class DataMerger:         # After spliting the main dataset to small capsules th
     def mergeRowsForEachPaitent(self,size):  # By applying a Group by and then a SUM it categorize the polyps of a patient on 1 row
 
         pathToSaveCSV = "./../datasets/Polyps/{0}.csv".format(size)
-        dt = pd.read_csv(pathToSaveCSV)#.astype(float)
-
-        #columns = list(dt.columns[1:])
+        dt = pd.read_csv(pathToSaveCSV)
 
         print("Size is:   "+size)
         dt = dt.groupby(by=['facility','patient_ID','year','month'], as_index=False).sum()
         dt["Size of Sessile in Words"] = size                                             #After sum, this col is concated, so it must be overwritten by correct value
-        dt.rename(columns={'Number of sessiles': '{0} No'.format(size)},inplace=True)
+        dt.rename(columns={'Number of sessiles': 'Nr_{0}'.format(size)},inplace=True)
 
         dt = self.considerPolypsWithPathology(dt)
         print("======================================================")

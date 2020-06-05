@@ -1,2 +1,20 @@
-facility,patient_ID,year,month,dt,Number of Capsules,Large No,Shape,cecum,ascending colon,ileocecal valve,hepatic flexure,transverse colon,splenic flexure,descending colon,sigmoid colon,rectum,appendix,rectosigmoid,Left,Right ,Adenocarcinoma,Villous,adenoma,high grade dysplasia,Biopsy,adenomatous,Adenomatous-capital,Tubular,Size of Sessile in Words
-A,0,2004,12,0,8,2.0,0,0,0,0,0,0,0,0,0,0,0,0,7.0,0,0,0,0,0,0,0,0,0,Large
+facility,patient_ID,year,month,dt,Nr_Large,At CM,cecum,ascending colon,ileocecal valve,hepatic flexure,transverse colon,splenic flexure,descending colon,sigmoid colon,rectum,appendix,rectosigmoid,Left,Adenocarcinoma,Villous,adenoma,high grade dysplasia,Biopsy,adenomatous,Adenomatous-capital,Tubular,Size of Sessile in Words
+Ann Arbor,4388,2004,8,0,2.0,0,0,0,0,0,0,0,0,1,0,0,0,2.0,0,0,1,0,1,1,1,0.0,Large
+Ann Arbor,0,2005,6,0,7.0,0,0,0,0,0,0,0,1,2,0,1,0,7.0,0,0,0,0,2,0,0,0.0,Large
+Ann Arbor,266635,2008,7,91,0.0,0,0,0,0,0,0,0,0,1,0,0,0,0.0,0,0,1,0,1,1,1,0.0,Large
+Ann Arbor,767946,2009,10,0,3.0,0,0,0,0,0,0,0,1,1,0,0,0,3.0,0,0,2,0,2,2,2,0.0,Large
+Ann Arbor,0,2009,6,0,1.0,0,0,0,0,0,0,0,0,0,1,0,0,1.0,0,0,0,0,1,0,0,0.0,Large
+Ann Arbor,819677,2009,5,0,1.0,0,1,0,0,0,0,0,0,0,0,0,0,1.0,0,0,1,0,1,0,0,0.0,Large
+Ann Arbor,830857,2007,6,0,2.0,0,0,0,0,0,0,0,1,0,0,0,1,2.0,0,0,2,0,2,2,2,0.0,Large
+Ann Arbor,934904,2007,7,0,1.0,0,0,0,0,1,0,0,0,1,0,0,0,1.0,0,0,1,0,1,1,1,0.0,Large
+Ann Arbor,1147170,2009,9,0,3.0,0,0,0,0,0,1,0,0,0,0,0,0,6.0,0,0,1,0,1,1,1,0.0,Large
+Ann Arbor,1251415,2006,10,0,2.0,0,0,0,0,0,1,0,0,0,0,0,0,4.0,0,0,1,0,1,1,1,0.0,Large
+Ann Arbor,1345500,2009,2,0,4.0,0,0,1,0,0,1,0,0,0,0,0,0,11.0,0,0,2,0,2,2,2,0.0,Large
+Ann Arbor,1373116,2008,6,0,1.0,0,0,0,0,0,0,0,1,0,0,0,0,1.0,0,0,1,0,1,1,1,0.0,Large
+Ann Arbor,1579768,2009,9,0,1.0,0,0,1,0,0,0,0,0,0,0,0,0,4.0,0,0,1,0,1,1,1,0.0,Large
+Ann Arbor,1640698,2006,1,1151,2.0,0,0,0,0,0,1,0,0,0,0,0,0,2.0,0,0,1,0,1,1,1,0.0,Large
+Ann Arbor,1644652,2009,12,0,1.0,0,0,1,0,0,1,0,0,1,0,0,0,4.0,0,0,1,0,1,1,1,0.0,Large
+Ann Arbor,1651722,2008,3,607,2.0,0,0,0,0,0,1,0,0,0,0,0,0,4.0,0,0,1,0,1,1,1,0.0,Large
+Ann Arbor,1912606,2009,9,63,0.0,0,0,0,0,0,1,0,0,0,0,0,0,0.0,0,0,1,0,1,1,1,0.0,Large
+Ann Arbor,0,2003,12,0,2.0,0,0,0,0,0,0,0,0,1,0,0,0,6.0,0,0,0,0,1,0,0,0.0,Large
+Ann Arbor,0,2009,5,0,2.0,0,0,0,0,0,0,0,0,1,1,0,0,6.0,0,0,0,0,1,0,0,0.0,Large
