@@ -14,6 +14,7 @@ class PolypSizeFixMultipleCategory:
         self.itterate_Over_The_Rows_To_Find_Polyps_With_Multiple_Category()
 
         self.cleanedDataSet.drop([" Size-Range"], axis=1,inplace=True)   # Remove the helper column from main DT
+        self.addIDtoDataset()
         self.writeToFile()
 
 
@@ -86,7 +87,7 @@ class PolypSizeFixMultipleCategory:
 
     def isPolypNrBiggerThanPolypSizes(self,categoryLength,polypNo):   #Check if the number of polyps are less than categorize of polyp sizes
 
-        if polypNo >= categoryLength and polypNo > 0 and categoryLength >= 1 :
+        if polypNo > categoryLength and polypNo > 0 and categoryLength > 1 :
             return True
         else:
             return False
@@ -99,13 +100,6 @@ class PolypSizeFixMultipleCategory:
         col = self.cleanedDataSet[' Size (in mm)'].str.findall("(\d+)").apply(lambda x: list(map(float, x)))#.values
 
         self.cleanedDataSet.insert(45, ' Size-Range', col )  #45 is the column next to " Size (in mm)"
-
-    def getMinAndMax(self):   # Must return min and max for each range of size.
-
-        #sizeList = self.cleanedDataSet.loc[index, " Size-Range"]
-        self.cleanedDataSet.loc[:, " Size-Range"].apply(lambda x: [min(x), max(x)])
-        #print("index: ",index," sizeList: ",sizeList)
-        #return [np.min(sizeList), np.max(sizeList)]
 
     def specifyNumberOfSizeCategorizes(self,min,max):
         if (min in range(0,6)) and (max in range(6,10)):        # 0<=Small<=5  6<=Medium<=9    10<=Medium
@@ -126,6 +120,9 @@ class PolypSizeFixMultipleCategory:
 
         nRow = np.shape(self.cleanedDataSet)[0]
         self.cleanedDataSet.loc[nRow] = row
+
+    def addIDtoDataset(self):
+        self.cleanedDataSet.insert(1, 'PolypID', range(1,len(self.cleanedDataSet)+1))
 
     def writeToFile(self):
         self.cleanedDataSet.to_csv("./../datasets/Capsules/cleanedDataSet.csv", sep=',', encoding='utf-8', index=False)

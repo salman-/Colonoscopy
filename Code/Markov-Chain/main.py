@@ -11,7 +11,7 @@ from ColonoscopyDataSet import ColonoscopyDataSet
 dtPath = './DataSets/historyMatrixOfPaitentsWithMoreThan1Colnoscopy.csv'
 diffThershold = 0.2
 
-dt = ColonoscopyDataSet(dtPath,4)
+dt = ColonoscopyDataSet(dtPath,7)
 
 psiLast = Psi(dt.matrix,dt.stateList )
 psiLast = psiLast.matrix

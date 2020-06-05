@@ -8,8 +8,6 @@ from ReduceStatesMethod1              import ReduceStatesMethod1
 from CombineRowsWithLessThan6MonthGap import CombineRowsWithLessThan6MonthGap
 from PolypSizeFixMultipleCategory     import PolypSizeFixMultipleCategory
 
-
-
 originalDTPath = "./../datasets/Original DT/sample.csv"
 cleanedDTPath  = "./../datasets/Capsules/cleanedDataSet.csv"
 
@@ -19,18 +17,13 @@ QuantificationOfNumberOfSessiles(cleanedDTPath)
 
 PolypSizeFixMultipleCategory(cleanedDTPath)
 
-#PolypSizeCleaner(cleanedDTPath)       # Validate the Size of column before obtain the final status
+PolypSizeCleaner(cleanedDTPath)       # Validate the Size of column before obtain the final status
 
-
-"""
-RestructureLocation(cleanedDTPath)    # Colon has 13 different location. Here we categorize them into Right and Left
-
-#QuantificationOfNumberOfSessiles(cleanedDTPath)
 
 DataSeperator(cleanedDTPath)         # Seprate different capsules and save them in .csv files
 
 DataMerger()                         # Merge the seperated capsules in order to obtain the patient status
-
+"""
 #----------------------------------------
 
 inputDTPath  = "./../datasets/Final DT/MergedDT.csv"
@@ -47,5 +40,6 @@ inputDTPath  = "./../datasets/Final_CleanedDT.csv"
 arwlt6mg = CombineRowsWithLessThan6MonthGap(inputDTPath)
 
 #----------------------------------------
-"""
 
+
+"""

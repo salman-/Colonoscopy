@@ -63,5 +63,5 @@ class FillNAs:
             b = np.array(psi.loc[:,nextState].tolist())
             mul = a * b
 
-        weightedProb =  mul /  np.sum(mul)
+        weightedProb = mul / np.sum(mul)
         return weightedProb

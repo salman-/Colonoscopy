@@ -27,7 +27,7 @@ class PolypExtractor:
     def cleanDataSet(self):
 
         self.getPolyps()
-        self.addIDtoDataset()
+        #self.addIDtoDataset()
         #self.convertDTToInt()
         self.omitMissedPathologyRows()
         self.removeWhiteSpaces()
@@ -86,9 +86,6 @@ class PolypExtractor:
             self.cleanedDataSet[self.cleanedDataSet["manual?"] == ("missing pathology report")].index)
         self.cleanedDataSet = self.cleanedDataSet.drop(
             self.cleanedDataSet[self.cleanedDataSet["manual?"] == ("missing pathology")].index)
-
-    def addIDtoDataset(self):
-        self.cleanedDataSet["PolypID"] = range(1,len(self.cleanedDataSet)+1)
 
     def writeToFile(self):
         self.cleanedDataSet.to_csv("./../datasets/Capsules/cleanedDataSet.csv", sep=',', encoding='utf-8', index=False)

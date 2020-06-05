@@ -9,13 +9,11 @@ class PolypSizeCleaner:
 
         self.cleanedDataSet = pd.read_csv(dataSetPath, error_bad_lines=False, index_col=False, dtype='unicode')
 
-        self.setSizeInWords()
-        self.writeToFile()
-
-    def setSizeInWords(self):
-
         self.cleanSizeInMM()
         self.setSizeInWordsBasedOnSizeInMM()
+        self.writeToFile()
+
+
 
     def cleanSizeInMM(self):
 

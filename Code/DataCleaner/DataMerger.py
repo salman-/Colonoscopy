@@ -7,15 +7,12 @@ class DataMerger:         # After spliting the main dataset to small capsules th
     def __init__(self):
 
         self.getPolypsBasedOnSize("Small")
-        self.omitUnusedColumns("Small")
         self.mergeRowsForEachPaitent("Small")
 
         self.getPolypsBasedOnSize("Medium")
-        self.omitUnusedColumns("Medium")
         self.mergeRowsForEachPaitent("Medium")
 
         self.getPolypsBasedOnSize("Large")
-        self.omitUnusedColumns("Large")
         self.mergeRowsForEachPaitent("Large")
 
         self.mergAllPolypsOfPaitents()
@@ -29,21 +26,16 @@ class DataMerger:         # After spliting the main dataset to small capsules th
         location     = pd.read_csv("./../datasets/Capsules/location.csv")
         cancerStatus = pd.read_csv("./../datasets/Capsules/cancerStatus.csv")
 
-        polypQuery = """ 
-                       select patient.ID, 
-                              polyp.`Number of sessiles` as Nr_{0} , location.*, cancerStatus.*
+        dt = patient.merge(patientPolyp, on='patient_ID')\
+             .merge(polyp       , on='PolypID') \
+             .merge(location, on='PolypID') \
+             .merge(cancerStatus, on='PolypID')
 
-                       from   patient join patientPolyp on patient.ID           = patientPolyp.`PatientID-Date`
-                                      join polyp        on patientPolyp.PolypID = polyp.PolypID
-                                      join location     on polyp.PolypID        = location.PolypID
-                                      join cancerStatus on polyp.PolypID        = cancerStatus.PolypID
-                       where    `Size of Sessile in Words` ="{1}"               
-                                       """.format(size, size)
+        dt = dt[ dt["Size of Sessile in Words"]== size]
 
-        polyps = ps.sqldf(polypQuery)
-
+        dt = dt.drop(["PolypID"], axis=1)
         pathToSaveCSV = "./../datasets/Polyps/{0}.csv".format(size)
-        polyps.to_csv(pathToSaveCSV, sep=',', encoding='utf-8', index=False)
+        dt.to_csv(pathToSaveCSV, sep=',', encoding='utf-8', index=False)
 
     def mergAllPolypsOfPaitents(self):      # Each user might have different size of polyps. Aggregate these polyps in 1 row
 
@@ -53,46 +45,39 @@ class DataMerger:         # After spliting the main dataset to small capsules th
 
         largPolyps   = pd.read_csv("./../datasets/Polyps/Large.csv")
 
-
         patient      = pd.read_csv("./../datasets/Capsules/patient.csv")
 
-        MergedDT = smallPolyps.merge(mediumPolyps, how="outer",on="ID").merge(largPolyps, how="outer",on="ID")
-        MergedDT = patient.merge(MergedDT, how="inner",on="ID")
-        MergedDT = MergedDT.drop(["ID"], axis=1)
+        MergedDT = smallPolyps.merge(mediumPolyps, how="outer",on=['facility','patient_ID','year','month']).merge(largPolyps, how="outer",on=['facility','patient_ID','year','month'])
+        #MergedDT = patient.merge(MergedDT, how="inner",on=['facility','patient_ID','year','month'])
 
         MergedDT.to_csv("./../datasets/Final DT/MergedDT.csv", sep=',', encoding='utf-8', index=False)
 
-    def considerPolypsWithPathology(self,polyDT):                     # if a polyp has no pathology then, the number its sesels must be 0 as well
-                                                                      # Biopsy is not counted
-        sumOfPathologies = polyDT.loc[:, "Adenocarcinoma"] + polyDT.loc[:, "Villous"] + polyDT.loc[:,"adenoma"] +\
-              polyDT.loc[:,"high grade dysplasia"] + polyDT.loc[:,"Adenomatous-capital"] + polyDT.loc[:,"Tubular"]
+    def considerPolypsWithPathology(self, polypDT):   # if a polyp has no pathology then, the number its sesels must be 0 as well
+                                                      # Biopsy is not counted
+        sumOfPathologies = polypDT.loc[:, "Adenocarcinoma"] + polypDT.loc[:, "Villous"] + polypDT.loc[:, "adenoma"] + \
+                           polypDT.loc[:, "high grade dysplasia"] + polypDT.loc[:, "Adenomatous-capital"] + \
+                           polypDT.loc[:, "Tubular"]
 
        # polyDT.iloc[sumOfPathologies == 0, 1] = 0
-        selectedRows = np.arange(len(polyDT))[ sumOfPathologies == 0]
-        polyDT.iloc[selectedRows, 1] = 0
+        selectedRows = np.arange(len(polypDT))[sumOfPathologies == 0]
+        polypDT.iloc[selectedRows, 1] = 0
 
-        return polyDT
+        return polypDT
 
     def mergeRowsForEachPaitent(self,size):  # By applying a Group by and then a SUM it categorize the polyps of a patient on 1 row
 
         pathToSaveCSV = "./../datasets/Polyps/{0}.csv".format(size)
-        dt = pd.read_csv(pathToSaveCSV).astype(float)
+        dt = pd.read_csv(pathToSaveCSV)#.astype(float)
 
-        columns = list(dt.columns[1:])
+        #columns = list(dt.columns[1:])
 
         print("Size is:   "+size)
-        dt = dt.groupby(by=['ID'], as_index=False)[columns].sum()
+        dt = dt.groupby(by=['facility','patient_ID','year','month'], as_index=False).sum()
+        dt["Size of Sessile in Words"] = size                                             #After sum, this col is concated, so it must be overwritten by correct value
+        dt.rename(columns={'Number of sessiles': '{0} No'.format(size)},inplace=True)
+
         dt = self.considerPolypsWithPathology(dt)
         print("======================================================")
         print(dt)
 
-        dt.to_csv(pathToSaveCSV, sep=',', encoding='utf-8', index=False)
-
-    def omitUnusedColumns(self,size):
-
-        pathToSaveCSV = "./../datasets/Polyps/{0}.csv".format(size)
-        dt = pd.read_csv(pathToSaveCSV)
-        dt = dt.fillna(0)
-
-        dt = dt.drop(["PolypID","PolypID.1"],axis=1)
         dt.to_csv(pathToSaveCSV, sep=',', encoding='utf-8', index=False)
