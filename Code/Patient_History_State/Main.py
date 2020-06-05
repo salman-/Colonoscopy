@@ -49,7 +49,6 @@ for i in range(0 , len(historyMatrix.columns)-2):
 
 print("LIST OF COLUMN NAMES:       ",lst)
 historyMatrix.columns = lst
-#historyMatrix.set_index('patient_ID', inplace=True)
 historyMatrix.to_csv("./../datasets/historyMatrix.csv", sep=',', encoding='utf-8',index=True)
 
 """
