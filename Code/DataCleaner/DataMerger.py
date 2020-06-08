@@ -27,13 +27,12 @@ class DataMerger:         # After spliting the main dataset to small capsules th
         cancerStatus = pd.read_csv("./../datasets/Capsules/cancerStatus.csv")
 
         dt = patient.merge(patientPolyp, on='patient_ID')\
-             .merge(polyp       , on='PolypID') \
-             .merge(location, on='PolypID') \
-             .merge(cancerStatus, on='PolypID')
+             .merge(polyp     ,   on='PolypID')\
+             .merge(location,     on='PolypID') \
+             .merge(cancerStatus, on='PolypID').query('`Size of Sessile in Words` == @size' )
 
-        dt = dt[ dt["Size of Sessile in Words"]== size]
 
-        dt = dt.drop(["PolypID","Number of Capsules","Shape","Size of Sessile in Words"], axis=1)
+        dt = dt.drop(["Number of Capsules","Shape","Size of Sessile in Words"], axis=1)
         pathToSaveCSV = "./../datasets/Polyps/{0}.csv".format(size)
         dt.to_csv(pathToSaveCSV, sep=',', encoding='utf-8', index=False)
 
@@ -49,14 +48,15 @@ class DataMerger:         # After spliting the main dataset to small capsules th
 
     def considerPolypsWithPathology(self, polypDT):   # if a polyp has no pathology then, the number its sesels must be 0 as well
                                                       # Biopsy is not counted
-        sumOfPathologies = polypDT.loc[:, "Adenocarcinoma"] + polypDT.loc[:, "Villous"] + polypDT.loc[:, "adenoma"] + \
-                           polypDT.loc[:, "high grade dysplasia"] + polypDT.loc[:, "Adenomatous-capital"] + \
-                           polypDT.loc[:, "Tubular"]
+        sumOfPathologies = polypDT.loc[:, "Adenocarcinoma"] + polypDT.loc[:, "Villous"] +\
+                           polypDT.loc[:, "adenoma"] + polypDT.loc[:, "high grade dysplasia"] +\
+                           polypDT.loc[:, "Adenomatous-capital"] + polypDT.loc[:, "Tubular"]
 
-        selectedRows = np.arange(len(polypDT))[sumOfPathologies == 0]
-        polypDT.iloc[selectedRows, 1] = 0
+        selectedRows = np.arange(len(polypDT))[sumOfPathologies > 0]
+        #dt = polypDT.iloc[selectedRows, 1]
+        dt = polypDT.iloc[selectedRows, : ] #= 0
 
-        return polypDT
+        return dt
 
     def mergeRowsForEachPaitent(self,size):  # By applying a Group by and then a SUM it categorize the polyps of a patient on 1 row
 

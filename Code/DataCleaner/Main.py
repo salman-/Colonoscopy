@@ -8,7 +8,7 @@ from ReduceStatesMethod1              import ReduceStatesMethod1
 from CombineRowsWithLessThan6MonthGap import CombineRowsWithLessThan6MonthGap
 from PolypSizeFixMultipleCategory     import PolypSizeFixMultipleCategory
 
-originalDTPath = "./../datasets/Original DT/sample.csv"
+originalDTPath = "./../datasets/Original DT/sample_makhdoosh.csv"
 cleanedDTPath  = "./../datasets/Capsules/cleanedDataSet.csv"
 
 PolypExtractor(originalDTPath)        # Set dataset polyp based
@@ -24,6 +24,7 @@ DataSeperator(cleanedDTPath)         # Seprate different capsules and save them 
 
 DataMerger()                         # Merge the seperated capsules in order to obtain the patient status
 
+"""
 #----------------------------------------
 
 inputDTPath  = "./../datasets/Final DT/MergedDT.csv"
@@ -40,3 +41,4 @@ inputDTPath  = "./../datasets/Final_CleanedDT.csv"
 arwlt6mg = CombineRowsWithLessThan6MonthGap(inputDTPath)
 
 #----------------------------------------
+"""
