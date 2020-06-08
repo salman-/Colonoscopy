@@ -40,6 +40,3 @@ inputDTPath  = "./../datasets/Final_CleanedDT.csv"
 arwlt6mg = CombineRowsWithLessThan6MonthGap(inputDTPath)
 
 #----------------------------------------
-
-"""
-"""
