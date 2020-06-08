@@ -26,5 +26,6 @@ class PolypSizeCleaner:
         self.cleanedDataSet.loc[(self.cleanedDataSet[" Size (in mm)"].between(6,9.99)), "Size of Sessile in Words"] = "Medium"
         self.cleanedDataSet.loc[ (10 <= self.cleanedDataSet[" Size (in mm)"]), "Size of Sessile in Words"] = "Large"
 
-    def writeToFile(self):
+    def writeToFile(self): # Save DT
+
         self.cleanedDataSet.to_csv("./../datasets/Capsules/cleanedDataSet.csv", sep=',', encoding='utf-8', index=False)
