@@ -9,7 +9,7 @@ from CombineRowsWithLessThan6MonthGap import CombineRowsWithLessThan6MonthGap
 from PolypSizeFixMultipleCategory     import PolypSizeFixMultipleCategory
 from SelectValidData                  import SelectValidData
 
-originalDTPath = "./../datasets/Original DT/sample_makhdoosh.csv"
+originalDTPath = "./../datasets/Original DT/sample.csv"
 cleanedDTPath  = "./../datasets/Capsules/cleanedDataSet.csv"
 
 PolypExtractor(originalDTPath)        # Set dataset polyp based

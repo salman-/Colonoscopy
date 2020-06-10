@@ -15,11 +15,12 @@ class PolypExtractor:
 
         capsulData = {
             "Capsul": [1, 2, 3, 4, 5, 6],
-            "Begin": [40, 81, 122, 163, 204, 245],
-            "End" : [81, 122, 163, 204, 245, 286]
+            "Begin": [41, 82, 123, 164, 205, 246],
+            "End" : [82, 123, 164, 205, 246, 287]
         }
         self.capsules = pd.DataFrame(capsulData)
-        self.cleanedDataSet = pd.DataFrame(pd.np.empty((0, 81)), columns=self.dt.columns[0:81])
+
+        self.cleanedDataSet = pd.DataFrame([], columns=self.dt.columns[1:82])
         self.cleanDataSet()
 
     # ------------------------------------------------------------------------------
@@ -40,7 +41,7 @@ class PolypExtractor:
 
                 if self.isAllCellsNULL(rowId, capsuleID):
                     row = self.getPolypeAndCapsul(rowId, capsuleID)
-                    self.cleanedDataSet = self.cleanedDataSet.append([row], ignore_index=True)
+                    self.addEmptyRowToCleanedDataSet(row)
 
                 print("---------------------------")
 
@@ -75,8 +76,7 @@ class PolypExtractor:
         print("-----")
 
         paitentHist = pd.concat([self.dt.iloc[rowId, 0:40], self.dt.iloc[rowId, capsulBegin:capsulEnd]])
-
-        return pd.DataFrame([paitentHist.tolist()], columns=self.dt.columns[0:81])
+        return pd.DataFrame([paitentHist.tolist()], columns=self.dt.columns[1:82]).values[0]
 
     # ------------------------------------------------------------------------------
 
@@ -95,3 +95,6 @@ class PolypExtractor:
         self.cleanedDataSet.replace("  ", "", inplace=True)
         self.cleanedDataSet.replace("   ", "", inplace=True)
 
+    def addEmptyRowToCleanedDataSet(self, rowData):
+        nRow = np.shape(self.cleanedDataSet)[0]
+        self.cleanedDataSet.loc[nRow] = rowData
