@@ -7,15 +7,20 @@ from DataMerger                       import DataMerger
 from ReduceStatesMethod1              import ReduceStatesMethod1
 from CombineRowsWithLessThan6MonthGap import CombineRowsWithLessThan6MonthGap
 from PolypSizeFixMultipleCategory     import PolypSizeFixMultipleCategory
+from SelectValidData                  import SelectValidData
 
 originalDTPath = "./../datasets/Original DT/sample_makhdoosh.csv"
 cleanedDTPath  = "./../datasets/Capsules/cleanedDataSet.csv"
 
 PolypExtractor(originalDTPath)        # Set dataset polyp based
 
-QuantificationOfNumberOfSessiles(cleanedDTPath)
+SelectValidData(cleanedDTPath)        # Create a dataset with data which has no NA in size and polypNo
 
-PolypSizeFixMultipleCategory(cleanedDTPath)
+#PolypSizeFixMultipleCategory(cleanedDTPath)
+
+"""
+
+QuantificationOfNumberOfSessiles(cleanedDTPath)
 
 PolypSizeCleaner(cleanedDTPath)       # Validate the Size of column before obtain the final status
 
@@ -24,7 +29,7 @@ DataSeperator(cleanedDTPath)         # Seprate different capsules and save them 
 
 DataMerger()                         # Merge the seperated capsules in order to obtain the patient status
 
-"""
+
 #----------------------------------------
 
 inputDTPath  = "./../datasets/Final DT/MergedDT.csv"

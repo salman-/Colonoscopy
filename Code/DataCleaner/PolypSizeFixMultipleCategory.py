@@ -124,5 +124,8 @@ class PolypSizeFixMultipleCategory:
     def addIDtoDataset(self):
         self.cleanedDataSet.insert(1, 'PolypID', range(1,len(self.cleanedDataSet)+1))
 
+    #def setSizeCategoryLength(self):
+
+
     def writeToFile(self):
         self.cleanedDataSet.to_csv("./../datasets/Capsules/cleanedDataSet.csv", sep=',', encoding='utf-8', index=False)
