@@ -18,8 +18,7 @@ class SelectValidData:
         self.getAllSizes()                  #  if size is 2,3,5,10mm then save it as [2,3,5,10] in the Size-Range column
         self.setSizeRange()                 # Specify the minimum and Maximum range of size of polyp
         self.dt = self.dt.loc[
-                        self.dt["Number of sessiles"].astype(float) >=
-                        self.dt[" Size-Category-No"].astype(float)]  # Polyp No must be bigger than Size-Range
+                        self.dt[" Size-Category-No"].astype(float) ==1]  # Polyp No must be bigger than Size-Range
         self.writeToFile()
 
     def getAllSizes(self):
@@ -47,4 +46,4 @@ class SelectValidData:
         return res
 
     def writeToFile(self):
-        self.dt.to_csv("./../datasets/Capsules/TrueData.csv", sep=',', encoding='utf-8', index=False)
+        self.dt.to_csv("./../datasets/Capsules/cleanedDataSet.csv", sep=',', encoding='utf-8', index=False)

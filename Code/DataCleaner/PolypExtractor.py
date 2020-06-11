@@ -20,8 +20,6 @@ class PolypExtractor:
         }
         self.capsules = pd.DataFrame(capsulData)
 
-        self.dt = self.dt[(self.dt["manual?"] != ("missing pathology report")) |
-                          (self.dt["manual?"] != ("missing pathology"))]  #Remove rows which has no pathology
         self.cleanedDataSet = pd.DataFrame([], columns=self.dt.columns[0:81])
         self.cleanDataSet()
 
