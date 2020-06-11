@@ -15,12 +15,14 @@ class PolypExtractor:
 
         capsulData = {
             "Capsul": [1, 2, 3, 4, 5, 6],
-            "Begin": [41, 82, 123, 164, 205, 246],
-            "End" : [82, 123, 164, 205, 246, 287]
+            "Begin": [40, 81, 122, 163, 204, 245],
+            "End" : [81, 122, 163, 204, 245, 286]
         }
         self.capsules = pd.DataFrame(capsulData)
 
-        self.cleanedDataSet = pd.DataFrame([], columns=self.dt.columns[1:82])
+        self.dt = self.dt[(self.dt["manual?"] != ("missing pathology report")) |
+                          (self.dt["manual?"] != ("missing pathology"))]  #Remove rows which has no pathology
+        self.cleanedDataSet = pd.DataFrame([], columns=self.dt.columns[0:81])
         self.cleanDataSet()
 
     # ------------------------------------------------------------------------------
