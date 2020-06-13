@@ -17,5 +17,5 @@ SelectValidData(cleanedDTPath)               # Create a dataset which data which
 
 PolypSizeFixMultipleCategory(cleanedDTPath)  # Just to TEST. This line must not print anything.
 
-PolypSizeCleaner(cleanedDTPath)
+PolypSizeCleaner(cleanedDTPath)   #-----------
 
