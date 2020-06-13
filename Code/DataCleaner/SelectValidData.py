@@ -19,6 +19,9 @@ class SelectValidData:
         self.setSizeRange()                 # Specify the minimum and Maximum range of size of polyp
         self.dt = self.dt.loc[
                         self.dt[" Size-Category-No"].astype(float) ==1]  # Polyp No must be bigger than Size-Range
+        capsulePathology1 = self.dt.iloc[:, [73, 74, 75, 76, 78, 79, 80]].notna().all(axis=1)   # Get capsules with valid pathology
+        self.dt = self.dt[capsulePathology1]
+
         self.writeToFile()
 
     def getAllSizes(self):

@@ -28,15 +28,12 @@ class PolypExtractor:
     def cleanDataSet(self):
 
         self.getPolyps()
-        #self.addIDtoDataset()
-        #self.convertDTToInt()
-        self.omitMissedPathologyRows()
         self.removeWhiteSpaces()
         self.writeToFile()
 
     def getPolyps(self):
 
-        for rowId in list(range(0, self.dt.shape[0])):  # For each paitent
+        for rowId in list(range(1, self.dt.shape[0])):  # For each paitent
             for capsuleID in list(range(0, 6)):         # There are 6 Capsul
 
                 if self.isAllCellsNULL(rowId, capsuleID):
@@ -79,13 +76,6 @@ class PolypExtractor:
         return pd.DataFrame([paitentHist.tolist()], columns=self.dt.columns[1:82]).values[0]
 
     # ------------------------------------------------------------------------------
-
-    def omitMissedPathologyRows(self):
-
-        self.cleanedDataSet = self.cleanedDataSet.drop(
-            self.cleanedDataSet[self.cleanedDataSet["manual?"] == ("missing pathology report")].index)
-        self.cleanedDataSet = self.cleanedDataSet.drop(
-            self.cleanedDataSet[self.cleanedDataSet["manual?"] == ("missing pathology")].index)
 
     def writeToFile(self):
         self.cleanedDataSet.to_csv("./../datasets/Capsules/cleanedDataSet.csv", sep=',', encoding='utf-8', index=False)

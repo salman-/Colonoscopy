@@ -7,21 +7,25 @@ from DataMerger                       import DataMerger
 from ReduceStatesMethod1              import ReduceStatesMethod1
 from CombineRowsWithLessThan6MonthGap import CombineRowsWithLessThan6MonthGap
 from PolypSizeFixMultipleCategory     import PolypSizeFixMultipleCategory
-from SelectValidData                  import SelectValidData
+from FilterUnusefullData              import FilterUnusefullData
+from FillNAs                          import FillNAs
 
-originalDTPath = "./../datasets/Original DT/sample.csv"
+originalDTPath = "./../datasets/Original DT/AnnArbor.csv"
 cleanedDTPath  = "./../datasets/Capsules/cleanedDataSet.csv"
 
-PolypExtractor(originalDTPath)        # Set dataset polyp based
+FilterUnusefullData(originalDTPath)
+
+PolypExtractor(cleanedDTPath)        # Set dataset polyp based
 
 PolypSizeFixMultipleCategory(cleanedDTPath)
-
-"""
 
 QuantificationOfNumberOfSessiles(cleanedDTPath)
 
 PolypSizeCleaner(cleanedDTPath)       # Validate the Size of column before obtain the final status
 
+FillNAs(cleanedDTPath)
+
+"""
 
 DataSeperator(cleanedDTPath)         # Seprate different capsules and save them in .csv files
 
