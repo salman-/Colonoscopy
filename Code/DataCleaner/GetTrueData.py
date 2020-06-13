@@ -11,7 +11,7 @@ cleanedDTPath  = "./../datasets/Capsules/cleanedDataSet.csv"
 
 FilterUnusefullData(originalDTPath)
 
-PolypExtractor(originalDTPath)               # Set dataset polyp based
+PolypExtractor(cleanedDTPath)               # Set dataset polyp based
 
 SelectValidData(cleanedDTPath)               # Create a dataset which data which has no NA in size and polypNo
 
