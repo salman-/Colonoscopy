@@ -64,14 +64,14 @@ class QuantificationOfNumberOfSessiles:
     def distributeTheNumberOfSessileIntoLocations(self):
 
         self.cleanedDataSet.fillna(0, inplace=True)
-        self.cleanedDataSet['Right '] = self.cleanedDataSet['Right '].astype(float)
-        self.cleanedDataSet['Left'] = self.cleanedDataSet['Left'].astype(float)
-        self.cleanedDataSet['Number of sessiles'] = self.cleanedDataSet['Number of sessiles'].astype(float)
+        self.cleanedDataSet['Proximal/Right'] = self.cleanedDataSet['Proximal/Right'].astype(float)
+        self.cleanedDataSet['Distal/Left'] = self.cleanedDataSet['Distal/Left'].astype(float)
+        self.cleanedDataSet['Number of sessiles'] = self.cleanedDataSet['Number of sessiles'].astype(float) #dt
 
-        rightLocationProbability = (self.cleanedDataSet["Right "] / (self.cleanedDataSet["Right "] + self.cleanedDataSet["Left"])).fillna(0)
-        self.cleanedDataSet["Right "] = np.random.binomial(self.cleanedDataSet["Number of sessiles"], rightLocationProbability )
+        rightLocationProbability = (self.cleanedDataSet["Proximal/Right"] / (self.cleanedDataSet["Proximal/Right"] + self.cleanedDataSet["Distal/Left"])).fillna(0)
+        self.cleanedDataSet["Proximal/Right"] = np.random.binomial(self.cleanedDataSet["Number of sessiles"], rightLocationProbability )
 
-        self.cleanedDataSet["Left"] = self.cleanedDataSet["Number of sessiles"] - self.cleanedDataSet["Right "]
+        self.cleanedDataSet["Distal/Left"] = self.cleanedDataSet["Number of sessiles"] - self.cleanedDataSet["Proximal/Right"]
 
     def writeToFile(self):
         self.cleanedDataSet.to_csv("./../datasets/Capsules/cleanedDataSet.csv", sep=',', encoding='utf-8', index=False)

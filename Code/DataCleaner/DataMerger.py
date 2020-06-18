@@ -2,7 +2,7 @@ import pandas as pd
 import pandasql as ps
 import numpy as np
 
-class DataMerger:         # After spliting the main dataset to small capsules then we can rebuild data based on our needs
+class DataMerger:     # After spliting the main dataset to small capsules then we can rebuild data based on our needs
 
     def __init__(self):
 
@@ -68,7 +68,7 @@ class DataMerger:         # After spliting the main dataset to small capsules th
         dt["Size of Sessile in Words"] = size                                             #After sum, this col is concated, so it must be overwritten by correct value
         dt.rename(columns={'Number of sessiles': 'Nr_{0}'.format(size)},inplace=True)
 
-        dt = self.considerPolypsWithPathology(dt)
+        #dt = self.considerPolypsWithPathology(dt) # Not needed anymore
         print("======================================================")
         print(dt)
 

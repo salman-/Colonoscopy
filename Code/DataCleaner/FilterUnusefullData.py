@@ -35,3 +35,5 @@ class FilterUnusefullData:
 
     def writeToFile(self):
         self.dt.to_csv("./../datasets/Capsules/cleanedDataSet.csv", sep=',', encoding='utf-8', index=False)
+
+

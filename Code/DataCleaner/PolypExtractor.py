@@ -2,10 +2,20 @@ import numpy as np
 import pandas as pd
 
 '''dt.columns[40:81]   # Capsul 1
+dt.columns[81:163]     # Capsul 2
 dt.columns[122:163]    # Capsul 3
 dt.columns[163:204]    # Capsul 4
 dt.columns[204:245]    # Capsul 5
 dt.columns[245:286]    # Capsul 6'''
+
+#   Version 2
+
+'''dt.columns[35:61]   # Capsul 1
+dt.columns[62:88]      # Capsul 2
+dt.columns[89:115]     # Capsul 3
+dt.columns[116:142]    # Capsul 4
+dt.columns[143:169]    # Capsul 5
+dt.columns[170:196]    # Capsul 6'''
 
 
 class PolypExtractor:
@@ -15,12 +25,12 @@ class PolypExtractor:
 
         capsulData = {
             "Capsul": [1, 2, 3, 4, 5, 6],
-            "Begin": [40, 81, 122, 163, 204, 245],
-            "End" : [81, 122, 163, 204, 245, 286]
+            "Begin": [35, 62, 89, 116, 143, 170],
+            "End" : [61, 88, 115, 142, 169, 196]
         }
         self.capsules = pd.DataFrame(capsulData)
 
-        self.cleanedDataSet = pd.DataFrame([], columns=self.dt.columns[0:81])
+        self.cleanedDataSet = pd.DataFrame([], columns=self.dt.columns[0:61])
         self.cleanDataSet()
 
     # ------------------------------------------------------------------------------
@@ -72,8 +82,8 @@ class PolypExtractor:
         print("RowID: " + str(rowId) + " CapsuleID: " + str(capsuleID) + " capsulBegin: " + str(capsulBegin) + " capsulEnd: " + str(capsulEnd))
         print("-----")
 
-        paitentHist = pd.concat([self.dt.iloc[rowId, 0:40], self.dt.iloc[rowId, capsulBegin:capsulEnd]])
-        return pd.DataFrame([paitentHist.tolist()], columns=self.dt.columns[1:82]).values[0]
+        paitentHist = pd.concat([self.dt.iloc[rowId, 0:35], self.dt.iloc[rowId, capsulBegin:capsulEnd]]).tolist()
+        return paitentHist
 
     # ------------------------------------------------------------------------------
 

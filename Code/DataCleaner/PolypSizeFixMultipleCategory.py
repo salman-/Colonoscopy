@@ -3,7 +3,7 @@ import pandas as pd
 import json
 import math
 
-class PolypSizeFixMultipleCategory:
+class PolypSizeFixMultipleCategory:   #
 
     def __init__(self, dataSetPath):
 
