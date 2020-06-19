@@ -43,7 +43,7 @@ class PolypExtractor:
 
     def getPolyps(self):
 
-        for rowId in list(range(1, self.dt.shape[0])):  # For each paitent
+        for rowId in list(range(0, self.dt.shape[0])):  # For each paitent
             for capsuleID in list(range(0, 6)):         # There are 6 Capsul
 
                 if self.isAllCellsNULL(rowId, capsuleID):

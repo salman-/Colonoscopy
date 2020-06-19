@@ -47,7 +47,7 @@ class DataSeperator:
         symptoms.to_csv("./../datasets/Capsules/symptoms.csv", sep=',', encoding='utf-8', index=False)
 
     def seperatePolyp(self):
-        col = ['PolypID', 'Number of sessiles', 'Size of Sessile in Words', 'Shape']
+        col = ['PolypID', 'Number of sessiles', 'Size of Sessile in Words']
         polyp = self.dataset.loc[:, col]
         #polyp = self.dataset.iloc[:, np.r_[1, 42:45]]                                                   # 1 = PolyID
         #print("======================= seperatePolyp ============================")
@@ -55,10 +55,10 @@ class DataSeperator:
         polyp.to_csv("./../datasets/Capsules/polyp.csv", sep=',', encoding='utf-8', index=False)
 
     def sperateLocation(self):
-        col = ['PolypID','cecum', 'ascending colon', 'ileocecal valve', 'hepatic flexure', 'transverse colon', 'splenic flexure',
-       'descending colon', 'sigmoid colon', 'rectum', 'appendix', 'rectosigmoid', 'Left', 'Right ']
-        location = self.dataset.iloc[:, np.r_[1, 48:61]]                                             # 1 = PolyID
-        #location = self.dataset.loc[:, col]
+        col = ['PolypID','Cecum', 'Ascending Colon', 'Ileocecal Valve', 'Hepatic Flexure', 'Transverse Colon', 'Splenic Flexure',
+       'Descending Colon', 'Sigmoid Colon', 'Rectum', 'Rectosigmoid', 'Distal/Left', 'Proximal/Right']
+        #location = self.dataset.iloc[:, np.r_[1, 48:61]]                                             # 1 = PolyID
+        location = self.dataset.loc[:, col]
         #print("======================= sperateLocation ============================")
         #print(location.columns)
         location.to_csv("./../datasets/Capsules/location.csv", sep=',', encoding='utf-8', index=False)
@@ -68,13 +68,12 @@ class DataSeperator:
         therapy.to_csv("./../datasets/Capsules/therapy.csv", sep=',', encoding='utf-8', index=False)
 
     def sperateCancerStatus(self):
-        col = ['PolypID', 'Adenocarcinoma', 'Villous', 'adenoma', 'high grade dysplasia', 'Biopsy', 'adenomatous', 'Adenomatous', 'Tubular']
+        col = ['PolypID', 'Adenocarcinoma', 'Villous',"Tubular Villous" , 'Adenoma', 'High Grade Dysplasia', 'Tubular Villous']
         cancerStatus = self.dataset.loc[:, col]
         #cancerStatus = self.dataset.iloc[:, np.r_[1, 74:82]]                   # 2 = Paitent_ID and 81 = Tubular
         #print("======================= sperateCancerStatus ============================")
         #print(cancerStatus.columns)
 
-        cancerStatus = cancerStatus.rename(columns={'Adenomatous':'Adenomatous-capital'})
         cancerStatus.to_csv("./../datasets/Capsules/cancerStatus.csv", sep=',', encoding='utf-8', index=False)
 
     def printColumns(self,fromColumn,toColumn):

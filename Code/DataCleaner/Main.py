@@ -9,6 +9,8 @@ from CombineRowsWithLessThan6MonthGap import CombineRowsWithLessThan6MonthGap
 from PolypSizeFixMultipleCategory     import PolypSizeFixMultipleCategory
 from FilterUnusefullData              import FilterUnusefullData
 from FillNAs                          import FillNAs
+from DataMergerNoneAdvanced           import DataMergerNoneAdvanced
+
 
 originalDTPath = "./../datasets/Original DT/Detroit_new_sample.csv"
 cleanedDTPath  = "./../datasets/Capsules/cleanedDataSet.csv"
@@ -16,7 +18,7 @@ cleanedDTPath  = "./../datasets/Capsules/cleanedDataSet.csv"
 #FilterUnusefullData(originalDTPath)  Not needed
 
 PolypExtractor(originalDTPath)        #Set dataset polyp based
-
+"""
 QuantificationOfNumberOfSessiles(cleanedDTPath)
 
 
@@ -25,12 +27,9 @@ PolypSizeFixMultipleCategory(cleanedDTPath)
 
 PolypSizeCleaner(cleanedDTPath)       # Validate the Size of column before obtain the final status
 
-#FillNAs(cleanedDTPath)
 
-"""
-"""
 DataSeperator(cleanedDTPath)         # Seprate different capsules and save them in .csv files
-
+#DataMergerNoneAdvanced()
 DataMerger()                         # Merge the seperated capsules in order to obtain the patient status
 
 
@@ -50,4 +49,4 @@ inputDTPath  = "./../datasets/Final_CleanedDT.csv"
 arwlt6mg = CombineRowsWithLessThan6MonthGap(inputDTPath)
 
 #----------------------------------------
-""""""
+"""

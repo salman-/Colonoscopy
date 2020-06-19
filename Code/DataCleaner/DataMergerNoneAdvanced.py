@@ -2,7 +2,7 @@ import pandas as pd
 import pandasql as ps
 import numpy as np
 
-class DataMerger:     # After spliting the main dataset to small capsules then we can rebuild data based on our needs
+class DataMergerNoneAdvanced:     # After spliting the main dataset to small capsules then we can rebuild data based on our needs
 
     def __init__(self):
 
@@ -32,7 +32,7 @@ class DataMerger:     # After spliting the main dataset to small capsules then w
              .merge(cancerStatus, on='PolypID').query('`Size of Sessile in Words` == @size' )
 
 
-        dt = dt.drop(["Number of Capsules","Size of Sessile in Words"], axis=1)
+        dt = dt.drop(["Number of Capsules","Shape","Size of Sessile in Words"], axis=1)
         pathToSaveCSV = "./../datasets/Polyps/{0}.csv".format(size)
         dt.to_csv(pathToSaveCSV, sep=',', encoding='utf-8', index=False)
 
@@ -44,7 +44,7 @@ class DataMerger:     # After spliting the main dataset to small capsules then w
 
         MergedDT = smallPolyps.merge(mediumPolyps, how="outer",on=['facility','patient_ID','year','month']).merge(largPolyps, how="outer",on=['facility','patient_ID','year','month'])
 
-        MergedDT.to_csv("./../datasets/Final DT/MergedDT.csv", sep=',', encoding='utf-8', index=False)
+        MergedDT.to_csv("./../datasets/Final DT/MergedDTNon-Advanced.csv", sep=',', encoding='utf-8', index=False)
 
     def considerPolypsWithPathology(self, polypDT):   # if a polyp has no pathology then, the number its sesels must be 0 as well
                                                       # Biopsy is not counted
@@ -62,10 +62,13 @@ class DataMerger:     # After spliting the main dataset to small capsules then w
 
         pathToSaveCSV = "./../datasets/Polyps/{0}.csv".format(size)
         dt = pd.read_csv(pathToSaveCSV)
-
+        print("_____________________________________________________")
+        print(dt)
+        print("_____________________________________________________")
         print("Size is:   "+size)
         dt = dt.groupby(by=['facility','patient_ID','year','month'], as_index=False).sum()
         dt["Size of Sessile in Words"] = size                                             #After sum, this col is concated, so it must be overwritten by correct value
+        dt = dt[dt["adenoma"] == 1]
         dt.rename(columns={'Number of sessiles': 'Nr_{0}'.format(size)},inplace=True)
 
         #dt = self.considerPolypsWithPathology(dt) # Not needed anymore
