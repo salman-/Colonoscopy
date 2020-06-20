@@ -1,4 +1,13 @@
-facility,patient_ID,year,month,dt,PolypID,Nr_Large,Cecum,Ascending Colon,Ileocecal Valve,Hepatic Flexure,Transverse Colon,Splenic Flexure,Descending Colon,Sigmoid Colon,Rectum,Rectosigmoid,Distal/Left,Proximal/Right,Adenocarcinoma,Villous,Tubular Villous,Adenoma,High Grade Dysplasia,Tubular Villous.1,Size of Sessile in Words
-Detriot,9086,2007,6,0,19,1.0,0,0,0,1,0,0,0,0,0,0,0.0,1,0,0,0,1,0,0,Large
-Detriot,9086,2008,10,487,19,1.0,0,0,0,1,0,0,0,0,0,0,0.0,1,0,0,0,1,0,0,Large
-Detriot,9086,2011,2,841,19,1.0,0,0,0,1,0,0,0,0,0,0,0.0,1,0,0,0,1,0,0,Large
+facility,patient_ID,year,month,Nr_Large,Adenocarcinoma,High Grade Dysplasia,Tubular Villous,Villous,Adenoma
+Detriot,9086,2011,2,1.0,0,0,0,0,1
+Detriot,9935,2007,12,1.0,0,0,1,1,1
+Detriot,26405,2008,7,1.0,0,0,1,1,1
+Detriot,40108,2009,6,1.0,0,0,0,0,1
+Detriot,43832,2009,8,1.0,0,0,0,0,0
+Detriot,55770,2008,8,2.0,0,1,0,0,2
+Detriot,61625,2008,9,2.0,0,0,2,2,2
+Detriot,112412,2009,9,0.0,0,0,0,0,0
+Detriot,115542,2007,5,1.0,0,1,0,0,1
+Detriot,118898,2007,12,2.0,0,0,0,0,1
+Detriot,128492,2009,4,1.0,0,0,0,0,1
+Detriot,140857,2007,8,1.0,0,0,1,1,1

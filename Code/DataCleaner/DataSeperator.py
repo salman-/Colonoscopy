@@ -18,14 +18,14 @@ class DataSeperator:
         self.sperateCancerStatus()
 
     def seperatePatient(self):
-        col = ['facility', 'record #', 'patient_ID', 'year', 'month', 'dt', 'manual?', 'row - indications', 'row - findings', 'row - pathology', 'Unnamed: 10']
+        col = ['facility', 'record #','PolypID', 'patient_ID', 'year', 'month', 'dt', 'manual?', 'row - indications', 'row - findings', 'row - pathology', 'Unnamed: 10']
         dt = self.dataset.loc[:, col]
 
         #dt = self.dataset.iloc[:, 0:11]
         #print("=======================  seperatePatient ============================")
         #print(dt.columns)
 
-        paitentGroupQuery = """    select facility,patient_ID, year, month,dt, count(*) as `Number of Capsules`
+        paitentGroupQuery = """    select facility,patient_ID,PolypID, year, month,dt, count(*) as `Number of Capsules`
                                    from dt
                                    group by patient_ID, year, month """
 

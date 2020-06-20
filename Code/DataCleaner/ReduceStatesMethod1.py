@@ -14,15 +14,20 @@ class ReduceStatesMethod1:
 
         self.dtPath = inputDTPath
         self.mainDt = pd.read_csv(self.dtPath)
-        self.mainDt = self.mainDt[["facility","patient_ID","year","month","dt",
-                                   "Nr_Small","Adenocarcinoma_x_x",
-                                   "Nr_Medium","Adenocarcinoma_x_y",
-                                   "Nr_Large","Adenocarcinoma_y"]]
+        self.mainDt = self.mainDt[["facility","patient_ID","year","month",
+                                   "Nr_Small","Adenocarcinoma_x",
+                                   "Nr_Medium","Adenocarcinoma_y",
+                                   "Nr_Large","Adenocarcinoma"]]
         self.mainDt.fillna(0,inplace=True)
-        dt = self.mainDt.iloc[:,1:11].astype(int).astype(str)
-        self.mainDt["State"] = dt["Nr_Small"]+"_"+dt["Nr_Medium"]+"_"+dt["Nr_Large"]     # Add State column
-        self.mainDt["Adenocarcinoma"] = dt["Adenocarcinoma_x_x"].astype(float)+dt["Adenocarcinoma_x_y"].astype(float)+dt["Adenocarcinoma_y"].astype(float)
-        self.mainDt.drop(['Adenocarcinoma_x_x', 'Adenocarcinoma_y','Adenocarcinoma_x_y'], axis=1, inplace=True)
+        #dt = self.mainDt.iloc[:,1:10].astype(int).astype(str)
+        dt = self.mainDt.loc[:, ["Nr_Small","Nr_Medium","Nr_Large"]].astype(int).astype(str)
+        self.mainDt["State"] = dt["Nr_Small"]+"_"+dt["Nr_Medium"]+"_"+dt["Nr_Large"]                 # Add State column
+
+        self.mainDt["Adenocarcinoma"] = self.mainDt["Adenocarcinoma_x"].astype(float)+\
+                                        self.mainDt["Adenocarcinoma_y"].astype(float)+\
+                                        self.mainDt["Adenocarcinoma"].astype(float)
+
+        self.mainDt.drop(['Adenocarcinoma_x', 'Adenocarcinoma_y'], axis=1, inplace=True)
 
     def labelThePaitentsWithMoreThan6PolypsAs6_6_6(self):  #
         recordsWith6PolypsOrMore = list(state > 6 for state in [sum(map(float, s.split('_'))) for s in self.mainDt.State])
@@ -30,7 +35,6 @@ class ReduceStatesMethod1:
 
     def labelThePaitentsWithCancersAs9_9_9(self):
         self.mainDt.loc[self.mainDt["Adenocarcinoma"]>0,["State"]] = '9_9_9'
-
 
     def output(self,outputDTPath):
         self.mainDt.to_csv(outputDTPath, sep=',', encoding='utf-8', index=False)
