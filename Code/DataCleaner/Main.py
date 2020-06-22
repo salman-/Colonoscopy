@@ -28,6 +28,8 @@ PolypSizeCleaner(cleanedDTPath)       # Validate the Size of column before obtai
 #DataMergerNoneAdvanced()
 
 DataMerger()                         # Merge the seperated capsules in order to obtain the patient status
+DataMerger(1)                        # MergedDT for ADVANCED DT
+DataMerger(2)                        #MergedDT for NON-ADVANCED
 
 #"""
 #----------------------------------------

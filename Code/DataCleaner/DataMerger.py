@@ -3,20 +3,20 @@ import numpy as np
 
 class DataMerger:     # After spliting the main dataset to small capsules then we can rebuild data based on our needs
 
-    def __init__(self):
-        """
-        polyp        = pd.read_csv("./../datasets/Capsules/polyp.csv")
-        patientPolyp = pd.read_csv("./../datasets/Capsules/patientPolyp.csv")
-        patient      = pd.read_csv("./../datasets/Capsules/patient.csv")
-        location     = pd.read_csv("./../datasets/Capsules/location.csv")
-        cancerStatus = pd.read_csv("./../datasets/Capsules/cancerStatus.csv")
-
-        self.dt = pd.merge(patient, patientPolyp, on='patient_ID', how='inner')
-        #self.dt = patient.join(patientPolyp.set_index('patient_ID'), on='patient_ID')#\
-                        # .join(polyp , how='inner', on='PolypID')#.merge(location,     on='PolypID').merge(cancerStatus, on='PolypID')
-        self.dt.to_csv("whole.csv", sep=',', encoding='utf-8', index=False) """
+    def __init__(self, advanceFlag):
 
         self.dt = pd.read_csv("./../datasets/Capsules/cleanedDataSet.csv")
+        if advanceFlag == 1:
+            print("sub set advanced data")
+            self.getAdvancedDT()
+            self.dtPath = "./../datasets/Final DT/NonAdvancedMergedDT.csv"
+        elif advanceFlag == 2:
+            print("sub set non-advanced data")
+            self.getNonAdvancedDT()
+            self.dtPath = "./../datasets/Final DT/AdvancedMergedDT.csv"
+        else:
+            self.dtPath = "./../datasets/Final DT/MergedDT.csv"
+            print("No preferance on Advance non-advance")
 
         self.getPolypsBasedOnSize("Small")
         self.mergeRowsForEachPaitent("Small")
@@ -29,6 +29,11 @@ class DataMerger:     # After spliting the main dataset to small capsules then w
 
         self.mergAllPolypsOfPaitents()
 
+    def getAdvancedDT(self):
+        self.dt = #???
+
+    def getNonAdvancedDT(self):
+        self.dt = #???
 
     def getPolypsBasedOnSize(self, size):
 
@@ -62,7 +67,7 @@ class DataMerger:     # After spliting the main dataset to small capsules then w
 
         MergedDT = smallPolyps.merge(mediumPolyps, how="outer",on=['facility','patient_ID','year','month']).merge(largPolyps, how="outer",on=['facility','patient_ID','year','month'])
 
-        MergedDT.to_csv("./../datasets/Final DT/MergedDT.csv", sep=',', encoding='utf-8', index=False)
+        MergedDT.to_csv(self.dtPath, sep=',', encoding='utf-8', index=False)
 
 
 
