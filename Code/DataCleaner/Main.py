@@ -6,24 +6,27 @@ from DataMerger                       import DataMerger
 from ReduceStatesMethod1              import ReduceStatesMethod1
 from CombineRowsWithLessThan6MonthGap import CombineRowsWithLessThan6MonthGap
 from PolypSizeFixMultipleCategory     import PolypSizeFixMultipleCategory
-from FilterUnusefullData              import FilterUnusefullData
+from FilterInvalidData              import FilterInvalidData
 
 
 
-originalDTPath = "./../datasets/Original DT/Detroit_new_sample-1.csv"
+
+originalDTPath = "./../datasets/Original DT/Detroit_150.csv"
 cleanedDTPath  = "./../datasets/Capsules/cleanedDataSet.csv"
 
-#FilterUnusefullData(originalDTPath)  Not needed
-
-PolypExtractor(originalDTPath)        #Set dataset polyp based
-
-QuantificationOfNumberOfSessiles(cleanedDTPath)
 
 
-PolypSizeFixMultipleCategory(cleanedDTPath)
+#PolypExtractor(originalDTPath)        #Set dataset polyp based
+
+FilterInvalidData(cleanedDTPath)  #Not needed
+
+#QuantificationOfNumberOfSessiles(cleanedDTPath)
 
 
-PolypSizeCleaner(cleanedDTPath)       # Validate the Size of column before obtain the final status
+#PolypSizeFixMultipleCategory(cleanedDTPath)
+
+
+#PolypSizeCleaner(cleanedDTPath)       # Validate the Size of column before obtain the final status
 """
 #DataMergerNoneAdvanced()
 """
