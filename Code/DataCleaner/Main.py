@@ -30,14 +30,14 @@ FilterInvalidData(cleanedDTPath)  #Not needed
 """
 #DataMergerNoneAdvanced()
 """
-#DataMerger(0)                         # Merge the seperated capsules in order to obtain the patient status
+DataMerger(0)                         # Merge the seperated capsules in order to obtain the patient status
 
 #DataMerger(1)                        # MergedDT for ADVANCED DT
 #DataMerger(2)                        #MergedDT for NON-ADVANCED
 
 #"""
 #----------------------------------------
-"""
+
 inputDTPath  = "./../datasets/Final DT/MergedDT.csv"
 outputDTPath = "./../datasets/Final_CleanedDT.csv"
 
@@ -45,7 +45,7 @@ rsm1 = ReduceStatesMethod1(inputDTPath)   #Obtain the result of each colonscopy 
 #rsm1.labelThePaitentsWithMoreThan6PolypsAs6_6_6()
 rsm1.labelThePaitentsWithCancersAs9_9_9()
 rsm1.output(outputDTPath)
-"""
+
 #----------------------------------------
 """
 inputDTPath  = "./../datasets/Final_CleanedDT.csv"
