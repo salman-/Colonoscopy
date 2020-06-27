@@ -38,7 +38,7 @@ class FilterInvalidData:
                           (self.dt.loc[:,"Adenoma"]!= "0")))
         self.dt = self.dt.loc[condition, :]
 
-    def filter4 (self):         # Remove: Number of Polyp != 0, Size == 0, Pathology != 0
+    def filter4 (self):         # Remove: Number of Polyp != 0, Size == 0, Pathology != 0,
         condition = ~((self.dt.loc[:,"Number of sessiles"] != "0") & (self.dt.loc[:," Size (in mm)"]== "0") &
                           ((self.dt.loc[:,"Adenocarcinoma"]!= "0")  |  (self.dt.loc[:,"Villous"]!= "0") |
                           (self.dt.loc[:,"Tubular Villous"]!= "0") | (self.dt.loc[:,"High Grade Dysplasia"]!= "0") |
