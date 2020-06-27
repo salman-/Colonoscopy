@@ -9,11 +9,11 @@ class DataMerger:     # After spliting the main dataset to small capsules then w
         if advanceFlag == 1:
             print("sub set advanced data")
             self.getAdvancedDT()
-            self.dtPath = "./../datasets/Final DT/NonAdvancedMergedDT.csv"
+            self.dtPath = "./../datasets/Final DT/AdvancedMergedDT.csv"
         elif advanceFlag == 2:
             print("sub set non-advanced data")
             self.getNonAdvancedDT()
-            self.dtPath = "./../datasets/Final DT/AdvancedMergedDT.csv"
+            self.dtPath = "./../datasets/Final DT/NonAdvancedMergedDT.csv"
         else:
             self.dtPath = "./../datasets/Final DT/MergedDT.csv"
             print("No preferance on Advance non-advance")
@@ -30,10 +30,15 @@ class DataMerger:     # After spliting the main dataset to small capsules then w
         self.mergAllPolypsOfPaitents()
 
     def getAdvancedDT(self):
-        self.dt = #???
+        self.dt = self.dt[((self.dt.loc[:,"Villous"]== 1) | (self.dt.loc[:,"Tubular Villous"]== 1) |
+                          (self.dt.loc[:,"High Grade Dysplasia"]== 1)) & (self.dt.loc[:,"Adenocarcinoma"]== 0) ]
 
     def getNonAdvancedDT(self):
-        self.dt = #???
+        self.dt = self.dt[((self.dt.loc[:,"Adenocarcinoma"]== 0)  &  (self.dt.loc[:,"Villous"]== 0) &
+                          (self.dt.loc[:,"Tubular Villous"]== 0) & (self.dt.loc[:,"High Grade Dysplasia"]== 0)) &
+                          (self.dt.loc[:,"Adenoma"]== 1)]
+    def getCancerDT(self):
+        self.dt = self.dt[ self.dt.loc[:,"Adenocarcinoma"] == 1 ]
 
     def getPolypsBasedOnSize(self, size):
 
