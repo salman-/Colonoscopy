@@ -9,29 +9,26 @@ from PolypSizeFixMultipleCategory     import PolypSizeFixMultipleCategory
 from FilterInvalidData              import FilterInvalidData
 
 
-
-
 originalDTPath = "./../datasets/Original DT/Detroit_150.csv"
 cleanedDTPath  = "./../datasets/Capsules/cleanedDataSet.csv"
 
 PolypExtractor(originalDTPath)        #Set dataset polyp based
 
-FilterInvalidData(cleanedDTPath)  #Not needed
-
 QuantificationOfNumberOfSessiles(cleanedDTPath)
+
+FilterInvalidData(cleanedDTPath)  #Not needed
+"""
+
 
 PolypSizeFixMultipleCategory(cleanedDTPath)
 
 PolypSizeCleaner(cleanedDTPath)       # Validate the Size of column before obtain the final status
-"""
-#DataMergerNoneAdvanced()
-"""
-DataMerger(0)                         # Merge the seperated capsules in order to obtain the patient status
 
+DataMerger(0)                         # Merge the seperated capsules in order to obtain the patient status
 #DataMerger(1)                        # MergedDT for ADVANCED DT
 #DataMerger(2)                        #MergedDT for NON-ADVANCED
 
-#"""
+
 #----------------------------------------
 
 inputDTPath  = "./../datasets/Final DT/MergedDT.csv"
@@ -43,9 +40,8 @@ rsm1.labelThePaitentsWithCancersAs9_9_9()
 rsm1.output(outputDTPath)
 
 #----------------------------------------
-"""
+
 inputDTPath  = "./../datasets/Final_CleanedDT.csv"
 arwlt6mg = CombineRowsWithLessThan6MonthGap(inputDTPath)
-
-#----------------------------------------
 """
+#----------------------------------------
