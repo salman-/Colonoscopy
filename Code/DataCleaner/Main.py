@@ -14,19 +14,15 @@ from FilterInvalidData              import FilterInvalidData
 originalDTPath = "./../datasets/Original DT/Detroit_150.csv"
 cleanedDTPath  = "./../datasets/Capsules/cleanedDataSet.csv"
 
-
-
-#PolypExtractor(originalDTPath)        #Set dataset polyp based
+PolypExtractor(originalDTPath)        #Set dataset polyp based
 
 FilterInvalidData(cleanedDTPath)  #Not needed
 
-#QuantificationOfNumberOfSessiles(cleanedDTPath)
+QuantificationOfNumberOfSessiles(cleanedDTPath)
 
+PolypSizeFixMultipleCategory(cleanedDTPath)
 
-#PolypSizeFixMultipleCategory(cleanedDTPath)
-
-
-#PolypSizeCleaner(cleanedDTPath)       # Validate the Size of column before obtain the final status
+PolypSizeCleaner(cleanedDTPath)       # Validate the Size of column before obtain the final status
 """
 #DataMergerNoneAdvanced()
 """
