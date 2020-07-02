@@ -55,7 +55,7 @@ class FilterInvalidData:
 
         self.getAllSizes()                  #  if size is 2,3,5,10mm then save it as [2,3,5,10] in the Size-Range column
         self.setSizeRange()                 # Specify the minimum and Maximum range of size of polyp
-        self.dt = self.dt.loc[self.dt[" Size-Category-No"].astype(float) >= self.dt.loc[:,"Number of sessiles"].astype(float)]  # Polyp No must be bigger than Size-Range
+        self.dt = self.dt.loc[self.dt[" Size-Category-No"].astype(float) <= self.dt.loc[:,"Number of sessiles"].astype(float)]  # Polyp No must be bigger than Size-Range
 #---------------------------------------------------------------------
 # ---------------------------------------------------------------------
 # ---------------------------------------------------------------------
