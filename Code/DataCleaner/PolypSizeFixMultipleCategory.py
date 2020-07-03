@@ -2,19 +2,23 @@ import numpy as np
 import pandas as pd
 import json
 import math
+import collections
 
 class PolypSizeFixMultipleCategory:   #
 
     def __init__(self, dataSetPath):
 
         self.cleanedDataSet = pd.read_csv(dataSetPath, error_bad_lines=False, index_col=False, dtype='unicode')
-        #print(self.cleanedDataSet)
+        self.dt = pd.DataFrame([], columns=self.cleanedDataSet.columns.tolist())
+
         self.getAllSizes()                  #  if size is 2,3,5,10mm then save it as [2,3,5,10] in the Size-Range column
         self.setSizeRange()                 # Specify the minimum and Maximum range of size of polyp
         self.itterate_Over_The_Rows_To_Find_Polyps_With_Multiple_Category()
 
-        self.cleanedDataSet.drop([" Size-Range"], axis=1,inplace=True)   # Remove the helper column from main DT
-        self.addIDtoDataset()
+        self.cleanedDataSet.drop([" Size-Range"," Size-Category-No"], axis=1,inplace=True)   # Remove the helper column from main DT
+        self.dt.drop([" Size-Range"," Size-Category-No"], axis=1,inplace=True)   # Remove the helper column from main DT
+        print("Is 2 dt has the same column?  ",collections.Counter(self.cleanedDataSet.columns.tolist()) == collections.Counter(self.dt.columns.tolist()))
+        self.cleanedDataSet = pd.concat([self.cleanedDataSet,self.dt])
         self.writeToFile()
 
 
@@ -31,7 +35,6 @@ class PolypSizeFixMultipleCategory:   #
 
             if self.isPolypNrBiggerThanPolypSizes(len(sizeCategory),polypNo):
                 selectedSizeCategory = ""
-                print("index: ", index,"Paitent_ID",row["patient_ID"] ," polypNo: ", row['Number of sessiles']," sizeCategoryLen: ", sizeCategory, "Len: ", len(sizeCategory))
 
                 minimumPolyp = polypNo % len(sizeCategory)
                 if (polypNo % len(sizeCategory)) > 0 :
@@ -39,6 +42,8 @@ class PolypSizeFixMultipleCategory:   #
                     print("Selected Category for "+str( minimumPolyp) +" remaining polyp is: ",selectedSizeCategory)
 
                 self.distributePolypsInDifferentSizeCategories(sizeCategory,row,minimumPolyp,selectedSizeCategory)
+                print("Paitent_ID: ",row["patient_ID"] ," polypNo: ", row['Number of sessiles']," sizeCategoryLen: ", sizeCategory, "Len: ", len(sizeCategory))
+
                 self.cleanedDataSet = self.cleanedDataSet.drop(index)
 
     def which_Size_Category_Must_Receive_1_Extra_Polyp(self,sizeCategory):
@@ -120,14 +125,8 @@ class PolypSizeFixMultipleCategory:   #
 
     def addEmptyRowToDT(self, row):
 
-        nRow = np.shape(self.cleanedDataSet)[0]
-        self.cleanedDataSet.loc[nRow] = row
-
-    def addIDtoDataset(self):
-        self.cleanedDataSet.insert(1, 'PolypID', range(1,len(self.cleanedDataSet)+1))
-
-    #def setSizeCategoryLength(self):
-
+        nRow = np.shape(self.dt)[0]
+        self.dt.loc[nRow] = row
 
     def writeToFile(self):
-        self.cleanedDataSet.to_csv("./../datasets/Capsules/cleanedDataSet1.csv", sep=',', encoding='utf-8', index=False)
+        self.dt.to_csv("./../datasets/Capsules/cleanedDataSet.csv", sep=',', encoding='utf-8', index=False)
