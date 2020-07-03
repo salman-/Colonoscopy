@@ -9,7 +9,7 @@ from PolypSizeFixMultipleCategory     import PolypSizeFixMultipleCategory
 from FilterInvalidData              import FilterInvalidData
 
 
-originalDTPath = "./../datasets/Original DT/Detroit_150.csv"
+originalDTPath = "./../datasets/Original DT/sample11.csv"
 cleanedDTPath  = "./../datasets/Capsules/cleanedDataSet.csv"
 
 PolypExtractor(originalDTPath)        #Set dataset polyp based
@@ -17,18 +17,15 @@ PolypExtractor(originalDTPath)        #Set dataset polyp based
 QuantificationOfNumberOfSessiles(cleanedDTPath)
 
 FilterInvalidData(cleanedDTPath)  #Not needed
-"""
 
 
 PolypSizeFixMultipleCategory(cleanedDTPath)
-
+"""
 PolypSizeCleaner(cleanedDTPath)       # Validate the Size of column before obtain the final status
 
 DataMerger(0)                         # Merge the seperated capsules in order to obtain the patient status
 #DataMerger(1)                        # MergedDT for ADVANCED DT
 #DataMerger(2)                        #MergedDT for NON-ADVANCED
-
-
 #----------------------------------------
 
 inputDTPath  = "./../datasets/Final DT/MergedDT.csv"
