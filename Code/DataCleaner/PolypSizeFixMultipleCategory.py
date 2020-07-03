@@ -31,12 +31,12 @@ class PolypSizeFixMultipleCategory:   #
 
             if self.isPolypNrBiggerThanPolypSizes(len(sizeCategory),polypNo):
                 selectedSizeCategory = ""
-                print("index: ", index, " polypNo: ", row['Number of sessiles']," sizeCategoryLen: ", sizeCategory, "Len: ", len(sizeCategory))
+                print("index: ", index,"Paitent_ID",row["patient_ID"] ," polypNo: ", row['Number of sessiles']," sizeCategoryLen: ", sizeCategory, "Len: ", len(sizeCategory))
 
-                minimumPolyp = math.floor(polypNo / len(sizeCategory))
+                minimumPolyp = polypNo % len(sizeCategory)
                 if (polypNo % len(sizeCategory)) > 0 :
                     selectedSizeCategory = self.which_Size_Category_Must_Receive_1_Extra_Polyp(sizeCategory)
-                    print("Selected Category for 1 remaining polyp is: ",selectedSizeCategory)
+                    print("Selected Category for "+str( minimumPolyp) +" remaining polyp is: ",selectedSizeCategory)
 
                 self.distributePolypsInDifferentSizeCategories(sizeCategory,row,minimumPolyp,selectedSizeCategory)
                 self.cleanedDataSet = self.cleanedDataSet.drop(index)
@@ -70,9 +70,11 @@ class PolypSizeFixMultipleCategory:   #
             if selectedSizeCategory == sizeCategory[i]:
                 copiedRow["Number of sessiles"] = minimumPolyp+1
             else:
-                copiedRow["Number of sessiles"] = minimumPolyp
+                copiedRow["Number of sessiles"] = 1
             copiedRow = self.fillPolypSize(copiedRow, sizeCategory[i])
+            print("i is:", i, "Category is: ", sizeCategory[i]+ "Polyp No: "+str(copiedRow["Number of sessiles"]))
             self.addEmptyRowToDT(copiedRow.values)
+            print("------------------------------------------------------")
 
 
     def fillPolypSize(self,row,sizeCategory):
@@ -128,4 +130,4 @@ class PolypSizeFixMultipleCategory:   #
 
 
     def writeToFile(self):
-        self.cleanedDataSet.to_csv("./../datasets/Capsules/cleanedDataSet.csv", sep=',', encoding='utf-8', index=False)
+        self.cleanedDataSet.to_csv("./../datasets/Capsules/cleanedDataSet1.csv", sep=',', encoding='utf-8', index=False)
