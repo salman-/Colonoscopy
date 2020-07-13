@@ -70,17 +70,18 @@ class FilterInvalidData:
 
     def specifyLengthOfSizeCategorizes(self, min, max):
 
+        print('min:  ', min , '   max:  ' , max )
         if (min in range(0,6)) and (max in range(6,10)):        # 0<=Small<=5  6<=Medium<=9    10<=Medium
             res = 2  #["Small","Medium"]
-        elif (min in range(0,6)) and (max in range(10,1000)):
+        elif (min in range(0,6)) and (max in range(10,100000)):
             res = 3  #["Small", "Medium","Large"]
-        elif (min in range(6,10)) and (max in range(10,1000)):
+        elif (min in range(6,10)) and (max in range(10,100000)):
             res = 2  #["Medium","Large"]
         elif (min in range(0,6)) and (max in range(0,6)) :
             res = 1  #["Small"]
         elif (min in range(6,10)) and (max in range(6,10)) :
             res = 1  #["Medium"]
-        elif (min in range(10,1000)) and (max in range(10,1000)) :
+        elif (min in range(10,100000)) and (max in range(10,100000)) :
             res = 1  #["Large"]
         return res
 
