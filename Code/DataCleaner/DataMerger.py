@@ -54,7 +54,11 @@ class DataMerger:     # After spliting the main dataset to small capsules then w
         dt = dt.groupby(by=['facility','patient_ID','year','month'], as_index=False).sum()
 
         #dt.apply(print)
-        dt = dt[['facility','patient_ID','year','month','Number of sessiles','Adenocarcinoma','High Grade Dysplasia','Tubular Villous','Villous','Adenoma']]
+        dt = dt[['facility','patient_ID','year','month','Number of sessiles','Adenocarcinoma','High Grade Dysplasia',
+                 'Tubular Villous', 'Villous', 'Adenoma',
+                 'Cecum', 'Ascending Colon', 'Ileocecal Valve', 'Hepatic Flexure', 'Transverse Colon', 'Splenic Flexure',
+                 'Descending Colon', 'Sigmoid Colon', 'Rectum',  'Rectosigmoid', 'Proximal/Right', 'Distal/Left' ]]
+
         dt.rename(columns={'Number of sessiles': 'Nr_{0}'.format(size)},inplace=True)
         dt.to_csv(pathToSaveCSV, sep=',', encoding='utf-8', index=False)
 
