@@ -111,15 +111,15 @@ class PolypSizeFixMultipleCategory:   #
     def specifyNumberOfSizeCategorizes(self,min,max):
         if (min in range(0,6)) and (max in range(6,10)):        # 0<=Small<=5  6<=Medium<=9    10<=Medium
             res = ["Small","Medium"]
-        elif (min in range(0,6)) and (max in range(10,1000)):
+        elif (min in range(0,6)) and (max in range(10,100000)):
             res = ["Small", "Medium","Large"]
-        elif (min in range(6,10)) and (max in range(10,1000)):
+        elif (min in range(6,10)) and (max in range(10,100000)):
             res = ["Medium","Large"]
         elif (min in range(0,6)) and (max in range(0,6)) :
             res = ["Small"]
         elif (min in range(6,10)) and (max in range(6,10)) :
             res = ["Medium"]
-        elif (min in range(10,1000)) and (max in range(10,1000)) :
+        elif (min in range(10,100000)) and (max in range(10,100000)) :
             res = ["Large"]
         return res
 
