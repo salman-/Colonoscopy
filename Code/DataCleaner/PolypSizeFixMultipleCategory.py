@@ -20,8 +20,8 @@ class PolypSizeFixMultipleCategory:
         self.dt.drop([" Size-Range"], axis=1,inplace=True)  # Remove the helper column from main DT
 
         print("Is 2 dt has the same column?  ",collections.Counter(self.cleanedDataSet.columns.tolist()) == collections.Counter(self.dt.columns.tolist()))
-        print(self.dt.columns)
-        print(self.cleanedDataSet.columns)
+        #print(self.dt.columns)
+        #print(self.cleanedDataSet.columns)
 
         self.cleanedDataSet = pd.concat([self.cleanedDataSet,self.dt])
         self.writeToFile()

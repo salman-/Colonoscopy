@@ -39,6 +39,7 @@ class PolypExtractor:
 
         self.getPolyps()
         self.removeWhiteSpaces()
+        self.cleanedDataSet[' Size (in mm)'].fillna(0, inplace=True)
         self.writeToFile()
 
     def getPolyps(self):
