@@ -7,22 +7,23 @@ from ReduceStatesMethod1              import ReduceStatesMethod1
 from CombineRowsWithLessThan6MonthGap import CombineRowsWithLessThan6MonthGap
 from PolypSizeFixMultipleCategory     import PolypSizeFixMultipleCategory
 from FilterInvalidData                import FilterInvalidData
-from proximalAndDistalFinder          import proximalAndDistalFinder
+#from proximalAndDistalFinder          import proximalAndDistalFinder
 
 
 originalDTPath = "./../datasets/Original DT/sample1.csv"
 cleanedDTPath  = "./../datasets/Capsules/cleanedDataSet.csv"
 
-#PolypExtractor(originalDTPath)        #Set dataset polyp based
+PolypExtractor(originalDTPath)        #Set dataset polyp based
 
-proximalAndDistalFinder(cleanedDTPath)
+PolypSizeFixMultipleCategory(cleanedDTPath)
+
+#proximalAndDistalFinder(cleanedDTPath)
 
 #QuantificationOfNumberOfSessiles(cleanedDTPath)
 
+
+
 #FilterInvalidData(cleanedDTPath)  #Not needed
-
-
-#PolypSizeFixMultipleCategory(cleanedDTPath)
 
 #PolypSizeCleaner(cleanedDTPath)       # Validate the Size of column before obtain the final status, drops "mm" term and
                            # brings a new column as small,medium,large
@@ -31,7 +32,7 @@ proximalAndDistalFinder(cleanedDTPath)
 #DataMerger(1)                        # MergedDT for ADVANCED DT
 #DataMerger(2)                        #MergedDT for NON-ADVANCED
 #----------------------------------------
-
+"""
 inputDTPath  = "./../datasets/Final DT/NonAdvancedMergedDT.csv"
 outputDTPath = "./../datasets/Final_CleanedDT.csv"
 
@@ -41,7 +42,7 @@ rsm1.labelThePaitentsWithCancersAs9_9_9()
 rsm1.output(outputDTPath)
 
 #----------------------------------------
-"""
+
 inputDTPath  = "./../datasets/Final_CleanedDT.csv"
 arwlt6mg = CombineRowsWithLessThan6MonthGap(inputDTPath)
 """

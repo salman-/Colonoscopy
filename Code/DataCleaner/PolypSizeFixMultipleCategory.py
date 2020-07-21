@@ -4,20 +4,25 @@ import json
 import math
 import collections
 
-class PolypSizeFixMultipleCategory:   #
+class PolypSizeFixMultipleCategory:
 
     def __init__(self, dataSetPath):
 
         self.cleanedDataSet = pd.read_csv(dataSetPath, error_bad_lines=False, index_col=False, dtype='unicode')
-        self.dt = pd.DataFrame([], columns=self.cleanedDataSet.columns.tolist())
 
         self.getAllSizes()                  #  if size is 2,3,5,10mm then save it as [2,3,5,10] in the Size-Range column
         self.setSizeRange()                 # Specify the minimum and Maximum range of size of polyp
-        self.itterate_Over_The_Rows_To_Find_Polyps_With_Multiple_Category()
 
-        self.cleanedDataSet.drop([" Size-Range"," Size-Category-No"], axis=1,inplace=True)   # Remove the helper column from main DT
-        self.dt.drop([" Size-Range"," Size-Category-No"], axis=1,inplace=True)   # Remove the helper column from main DT
+        self.dt = pd.DataFrame([], columns=self.cleanedDataSet.columns.tolist())
+
+        self.itterate_Over_The_Rows_To_Find_Polyps_With_Multiple_Category()
+        self.cleanedDataSet.drop([" Size-Range"], axis=1,inplace=True)  # Remove the helper column from main DT
+        self.dt.drop([" Size-Range"], axis=1,inplace=True)  # Remove the helper column from main DT
+
         print("Is 2 dt has the same column?  ",collections.Counter(self.cleanedDataSet.columns.tolist()) == collections.Counter(self.dt.columns.tolist()))
+        print(self.dt.columns)
+        print(self.cleanedDataSet.columns)
+
         self.cleanedDataSet = pd.concat([self.cleanedDataSet,self.dt])
         self.writeToFile()
 
