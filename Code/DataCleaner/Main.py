@@ -22,7 +22,7 @@ proximalAndDistalFinder(cleanedDTPath)
 #FilterInvalidData(cleanedDTPath)  #Not needed
 
 
-#PolypSizeFixMultipleCategory(cleanedDTPath)
+PolypSizeFixMultipleCategory(cleanedDTPath)  # take this line to 19 and resolve the error
 
 #PolypSizeCleaner(cleanedDTPath)       # Validate the Size of column before obtain the final status, drops "mm" term and
                            # brings a new column as small,medium,large
