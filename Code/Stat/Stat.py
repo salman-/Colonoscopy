@@ -8,7 +8,14 @@ class Stat:
 
         self.outputDTPath = outputDTPath
         self.dt = pd.read_csv(dataSetPath, error_bad_lines=False, index_col=False, dtype='unicode')
+        self.polypDistribution()
         self.countStateFrquency(self.dt)
+
+    def polypDistribution(self):
+        dt = self.dt.groupby(['Nr_Small', 'Nr_Medium', 'Nr_Large'], as_index=False).count()
+        dt.to_csv("./../datasets/PolypDist.csv")
+
+
 
     def countStateFrquency(self, dt):
         states = dt["State"].tolist()
@@ -63,7 +70,7 @@ class Stat:
 
     def getSizeDistribution(self, columnName):
 
-        dtPath = "./../datasets/Final_Cleaned_Not_Aggregated(6Month)_And_Without_State_6_6_6.csv"
+        dtPath = "./../datasets/Final_CleanedDT.csv"
         dt = pd.read_csv(dtPath, error_bad_lines=False, index_col=False, dtype='unicode')
         #print(dt[columnName])
         dt = self.addSumOfPolypSizeToDT(dt)
@@ -154,3 +161,4 @@ class Stat:
                 dt.loc[index, 'Right'] = 0
 
         return dt
+
