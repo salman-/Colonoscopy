@@ -37,6 +37,7 @@ class PolypSizeFixMultipleCategory:
 
             sizeCategory = self.specifyNumberOfSizeCategorizes(min(row[" Size-Range"]),max(row[" Size-Range"]))  # return something like [Small,Medium]
             polypNo = float(row["Number of sessiles"])
+            print("polypNo: ",polypNo, " sizeCategory: ",sizeCategory, "Len: ",len(sizeCategory))
 
             if self.isPolypNrBiggerThanPolypSizes(len(sizeCategory),polypNo):
                 selectedSizeCategory = ""
@@ -99,7 +100,7 @@ class PolypSizeFixMultipleCategory:
 
     def isPolypNrBiggerThanPolypSizes(self,categoryLength,polypNo):   #Check if the number of polyps are less than categorize of polyp sizes
 
-        if polypNo > categoryLength and polypNo > 0 and categoryLength > 1 :
+        if polypNo >= categoryLength and polypNo > 1 and categoryLength > 1 :
             return True
         else:
             return False
