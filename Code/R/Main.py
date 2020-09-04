@@ -10,7 +10,7 @@ from FilterInvalidData                import FilterInvalidData
 #from proximalAndDistalFinder          import proximalAndDistalFinder
 
 
-originalDTPath = "./../datasets/Original DT/sample1.csv"
+originalDTPath = "./../datasets/Original DT/sample_check.csv"
 cleanedDTPath  = "./../datasets/Capsules/cleanedDataSet.csv"
 
 PolypExtractor(originalDTPath)        #Set dataset polyp based
@@ -28,7 +28,7 @@ PolypSizeFixMultipleCategory(cleanedDTPath)
 #PolypSizeCleaner(cleanedDTPath)       # Validate the Size of column before obtain the final status, drops "mm" term and
                            # brings a new column as small,medium,large
 
-#DataMerger(0)                         # Merge the seperated capsules in order to obtain the patient status
+#DataMerger(0)            # Merge the seperated capsules in order to obtain the patient status
 #DataMerger(1)                        # MergedDT for ADVANCED DT
 #DataMerger(2)                        #MergedDT for NON-ADVANCED
 #----------------------------------------
